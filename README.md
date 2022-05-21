@@ -2,7 +2,7 @@
 
 # Set up
 
-# Install direnv and crate .envrc file as follows
+# Install direnv and crate .envrc file in your root directory as follows
 ```
 export GOOGLE_CLIENT_ID=
 export GOOGLE_CLIENT_SECRET=
@@ -21,7 +21,7 @@ export SANITY_API_TOKEN=
 You need to have an access to Sanity and google API to use some backend processes.
 
 # After you set up
-Run
+## Run for dev
 ```
 npm install
 npm run dev
