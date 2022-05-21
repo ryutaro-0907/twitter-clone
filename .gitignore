@@ -1,3 +1,9 @@
+# dependencies
+/sanity/node_modules
+
+# vscode
+/.history
+
 # Logs
 logs
 *.log
