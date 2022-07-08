@@ -4,7 +4,14 @@
 # vscode
 /.history
 
+# python
+.venv
+__pycache__
+
+# db
+*.db
 # Logs
+
 logs
 *.log
 npm-debug.log*
