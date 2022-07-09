@@ -65,11 +65,11 @@ class CommentDBHandler:
             comment = (
                 self.session.query(CommentOrm).filter(CommentOrm.id == info.id).first()
             )
-            comment.update({"text": info.comment})
+            comment.update({"comment": info.comment})
             self.session.commit()
 
-            logger.info("updated tweet: %s", tweet)
-            return Comment.from_orm(tweet)
+            logger.info("updated tweet: %s", comment)
+            return Comment.from_orm(comment)
 
         except Exception as e:
             raise Exception("Could not update tweet: %s", e)
