@@ -60,24 +60,34 @@ class CommentDBHandler:
     #         logger.error('could not fetch tweets: %s', e)
     #         return None
 
-    def update_comment(self, info: InputComment) -> Comment or None:
+    def update_comment(self, info: InputComment) -> Comment:
         try:
-            comment = (
-                self.session.query(CommentOrm).filter(CommentOrm.id == info.id).first()
-            )
-            comment.update({"comment": info.comment})
+            comment: CommentOrm = self.session.query(CommentOrm).filter(CommentOrm.id == info.id).first()
+
+            comment.comment = info.comment
+            comment.images = info.images
+
             self.session.commit()
 
             logger.info("updated tweet: %s", comment)
             return Comment.from_orm(comment)
+
 
         except Exception as e:
             raise Exception("Could not update tweet: %s", e)
 
     def delete_comment(self, comment_id: int) -> None:
         try:
-            self.session.query(CommentOrm).filter(CommentOrm.id == comment_id).delete()
-            logger.info("deleting tweet: %s", comment_id)
+            tweet = self.session.query(CommentOrm).filter(CommentOrm.id == comment_id).first()
+            res = Comment.from_orm(tweet)
+
+            try:
+                self.session.delete(tweet)
+                logger.info("deleting tweet: %s", comment_id)
+                return res
+
+            except Exception as e:
+                raise Exception("Could not delete tweet: %s", e)
 
         except Exception as e:
             raise Exception("Could not delete tweet: %s", e)

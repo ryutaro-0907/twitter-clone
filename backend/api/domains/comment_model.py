@@ -26,6 +26,8 @@ class InputComment(BaseModel):
     tweet_id: int
 
     comment: str
+    
+    id: int = None
     images: str or None = None
 
     class Config:

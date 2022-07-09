@@ -44,17 +44,17 @@ def get_comments(tweet_id: int, session: Session = Depends(get_session)):
 
 
 @router.put("/comments/{_id}/update", response_model=Comment)
-def update_tweet(request: InputComment, session: Session = Depends(get_session)):
+def update_comment(request: InputComment, session: Session = Depends(get_session)):
     try:
         service = CommentService(session)
         res = service.update_comment(request)
         if res is not None:
-            logger.info("update tweet")
+            logger.info("update comment")
             return res
         else:
-            HTTPException(404, "Couldn't update tweet")
+            HTTPException(404, "Couldn't update comment")
     except Exception as e:
-        HTTPException(500, "Couldn't update tweet", e)
+        HTTPException(500, "Couldn't update comment", e)
 
 
 @router.delete("/comments/{_id}", response_model=Comment)
@@ -63,9 +63,9 @@ def delete_tweet(request: InputComment, session: Session = Depends(get_session))
         service = CommentService(session)
         res = service.delete_comment(request)
         if res is not None:
-            logger.info("delete tweet")
+            logger.info("delete comment")
             return res
         else:
-            HTTPException(404, "Couldn't create tweet")
+            HTTPException(404, "Couldn't create comment")
     except Exception as e:
-        HTTPException(500, "Couldn't create tweet", e)
+        HTTPException(500, "Couldn't create comment", e)

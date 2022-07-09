@@ -61,10 +61,10 @@ def update_tweet(request: InputTweet, session: Session = Depends(get_session)):
 
 
 @router.delete("/tweets/{_id}", response_model=Tweet)
-def delete_tweet(request: InputTweet, session: Session = Depends(get_session)):
+def delete_tweet(tweet_id: int, session: Session = Depends(get_session)):
     try:
         service = TweetService(session)
-        res = service.delete_tweet(request)
+        res = service.delete_tweet(tweet_id)
         if res is not None:
             logger.info("delete tweet")
             return res

@@ -45,14 +45,13 @@ class TweetDBHandler:
             logger.error("could not fetch tweets: %s", e)
             return None
 
-    def update_tweet(self, tweet_info: InputTweet) -> Tweet or None:
+    def update_tweet(self, info: InputTweet) -> Tweet or None:
         try:
-            tweet = (
-                self.session.query(TweetOrm)
-                .filter(TweetOrm.id == tweet_info.id)
-                .first()
-            )
-            tweet.update({"text": tweet_info.text})
+            tweet: TweetOrm = self.session.query(TweetOrm).filter(TweetOrm.id == info.id).first()
+
+            tweet.text = info.text
+            tweet.images = info.images
+
             self.session.commit()
 
             logger.info("updated tweet: %s", tweet)
@@ -61,10 +60,18 @@ class TweetDBHandler:
         except Exception as e:
             raise Exception("Could not update tweet: %s", e)
 
-    def delete_tweet(self, tweet_id) -> None:
+    def delete_tweet(self, tweet_id:int) -> None:
         try:
-            self.session.query(TweetOrm).filter(TweetOrm.id == tweet_id).delete()
-            logger.info("deleting tweet: %s", tweet_id)
+            tweet = self.session.query(TweetOrm).filter(TweetOrm.id == tweet_id).first()
+            res = Tweet.from_orm(tweet)
+            
+            try:
+                self.session.delete(tweet)
+                logger.info("deleting tweet: %s", tweet_id)
+                return res
+
+            except Exception as e:
+                raise Exception("Could not delete tweet: %s", e)
 
         except Exception as e:
-            raise Exception("Could not delete tweet: %s", e)
+            raise Exception("Could not find tweet: %s", e)
