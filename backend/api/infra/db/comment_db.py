@@ -51,14 +51,7 @@ class CommentDBHandler:
         except Exception as e:
             logger.error("could not fetch comments: %s", e)
             raise Exception("Could not fetch comments")
-
-    # def fetch_Comments(self) -> List[Comment] or None:
-    #     try:
-    #         tweets = self.session.query(CommentOrm).all()
-    #         return tweets
-    #     except Exception as e:
-    #         logger.error('could not fetch tweets: %s', e)
-    #         return None
+            
 
     def update_comment(self, info: InputComment) -> Comment:
         try:
