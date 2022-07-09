@@ -25,16 +25,14 @@ logger = logging.getLogger(__name__)
 
 #     SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_endpoint}/app_db"
 
-db_user = os.environ.get('DB_USER', 'user')
-db_pass = os.environ.get('DB_PASS', 'pass')
-db_endpoint = os.environ.get('DB_ENDPOINT', 'development-db:5432')
+db_user = os.environ.get("DB_USER", "user")
+db_pass = os.environ.get("DB_PASS", "pass")
+db_endpoint = os.environ.get("DB_ENDPOINT", "development-db:5432")
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_endpoint}/app_db"
 
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, pool_pre_ping=True
-)
+engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_pre_ping=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -46,11 +44,11 @@ def init() -> None:
     """init."""
     with SessionLocal() as db:
         handler = TweetDBHandler(db)
-        tweet = InputTweet(user_id=1, text='test tweet')
+        tweet = InputTweet(user_id=1, text="test tweet")
         handler.create_tweet(tweet)
 
         handler = CommentDBHandler(db)
-        comment = InputComment(user_id=1, tweet_id=1, comment='test comment')
+        comment = InputComment(user_id=1, tweet_id=1, comment="test comment")
         handler.create_comment(comment)
 
 

@@ -12,9 +12,9 @@ class TweetService:
         self.handler = TweetDBHandler(self.session)
 
     def create_tweet(self, request: InputTweet) -> Tweet or None:
-        logger.info('creating new Tweet')
+        logger.info("creating new Tweet")
         res = self.handler.create_tweet(request)
-        logger.info('created new Tweet')
+        logger.info("created new Tweet")
         return res
 
     def update_tweet(self, request: InputTweet) -> Tweet or None:

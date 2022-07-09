@@ -3,8 +3,9 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from api.infra.db.base import Base
 
+
 class TweetOrm(Base):
-    __tablename__ = 'tweets'
+    __tablename__ = "tweets"
     id = Column(Integer, primary_key=True, nullable=False)
     text = Column(String(255))
     user_id = Column(Integer)
@@ -12,12 +13,13 @@ class TweetOrm(Base):
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    deleted_at  = Column(DateTime, nullable=True)
+    deleted_at = Column(DateTime, nullable=True)
 
     comment = relationship("CommentOrm")
 
+
 class CommentOrm(Base):
-    __tablename__ = 'comments'
+    __tablename__ = "comments"
     id = Column(Integer, primary_key=True, nullable=False)
 
     comment = Column(String(255))
@@ -27,4 +29,4 @@ class CommentOrm(Base):
     images = Column(String(255), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    deleted_at  = Column(DateTime, nullable=True)
+    deleted_at = Column(DateTime, nullable=True)

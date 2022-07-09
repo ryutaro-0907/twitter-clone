@@ -10,21 +10,26 @@ from api.infra.db.orms import CommentOrm
 
 logger = logging.getLogger(__name__)
 
+
 @dataclass
 class CommentDBHandler:
     session: Session
 
     def create_comment(self, input: InputComment) -> Comment:
         try:
-            comment = CommentOrm(comment=input.comment, user_id=input.user_id, tweet_id=input.tweet_id, images=input.images)
-            logger.info('creating comment')
+            comment = CommentOrm(
+                comment=input.comment,
+                user_id=input.user_id,
+                tweet_id=input.tweet_id,
+                images=input.images,
+            )
+            logger.info("creating comment")
             self.session.add(comment)
             self.session.commit()
 
-            logger.info({
-                'action': 'comment created',
-                'data': Comment.from_orm(comment)
-            })
+            logger.info(
+                {"action": "comment created", "data": Comment.from_orm(comment)}
+            )
 
             logger.info("Comment created successfully")
             return Comment.from_orm(comment)
@@ -33,13 +38,19 @@ class CommentDBHandler:
             logger.error("Error creating comment: %s", e)
             raise Exception("Error creating comment: %s" % e)
 
-    def fetch_comments_by_tweet_id(self, tweet_id:int) -> Comment or List[Comment] or None:
+    def fetch_comments_by_tweet_id(
+        self, tweet_id: int
+    ) -> Comment or List[Comment] or None:
         try:
-            comments = self.session.query(CommentOrm).filter(CommentOrm.tweet_id == tweet_id).all()
+            comments = (
+                self.session.query(CommentOrm)
+                .filter(CommentOrm.tweet_id == tweet_id)
+                .all()
+            )
             return comments
         except Exception as e:
-            logger.error('could not fetch comments: %s', e)
-            raise Exception('Could not fetch comments')
+            logger.error("could not fetch comments: %s", e)
+            raise Exception("Could not fetch comments")
 
     # def fetch_Comments(self) -> List[Comment] or None:
     #     try:
@@ -51,20 +62,22 @@ class CommentDBHandler:
 
     def update_comment(self, info: InputComment) -> Comment or None:
         try:
-            comment = self.session.query(CommentOrm).filter(CommentOrm.id == info.id).first()
-            comment.update({'text': info.comment})
+            comment = (
+                self.session.query(CommentOrm).filter(CommentOrm.id == info.id).first()
+            )
+            comment.update({"text": info.comment})
             self.session.commit()
 
-            logger.info('updated tweet: %s', tweet)
+            logger.info("updated tweet: %s", tweet)
             return Comment.from_orm(tweet)
 
         except Exception as e:
-            raise Exception('Could not update tweet: %s', e)
+            raise Exception("Could not update tweet: %s", e)
 
     def delete_comment(self, comment_id: int) -> None:
         try:
             self.session.query(CommentOrm).filter(CommentOrm.id == comment_id).delete()
-            logger.info('deleting tweet: %s', comment_id)
+            logger.info("deleting tweet: %s", comment_id)
 
         except Exception as e:
-            raise Exception('Could not delete tweet: %s', e)
+            raise Exception("Could not delete tweet: %s", e)

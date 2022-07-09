@@ -1,6 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
 
+
 class Comment(BaseModel):
     id: int
     created_at: datetime or str
@@ -12,7 +13,6 @@ class Comment(BaseModel):
     images: str or None = None
 
     blocked: bool = False
-
 
     updated_at: datetime or str = None
     deleted_at: datetime or str or None = None
@@ -27,5 +27,6 @@ class InputComment(BaseModel):
 
     comment: str
     images: str or None = None
+
     class Config:
-        orm_mode=True
+        orm_mode = True

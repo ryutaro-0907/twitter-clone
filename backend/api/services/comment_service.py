@@ -12,10 +12,10 @@ class CommentService:
         self.handler = CommentDBHandler(session)
 
     def create_comment(self, request: InputComment) -> Comment:
-        logger.info('creating new comment')
+        logger.info("creating new comment")
         try:
             res = self.handler.create_comment(request)
-            logger.info('created new comment')
+            logger.info("created new comment")
             return res
 
         except Exception as e:
@@ -29,10 +29,9 @@ class CommentService:
         res = self.handler.delete_comment(id)
         return res
 
-    def get_comments_by_id(self, tweet_id:int) -> Comment or List[Comment] or None:
+    def get_comments_by_id(self, tweet_id: int) -> Comment or List[Comment] or None:
         res = self.handler.fetch_comments_by_tweet_id(tweet_id)
         return res
-
 
     # def get_tweet(self, id: int) -> Tweet or None:
     #     res = self.handler.get_tweet(id)
