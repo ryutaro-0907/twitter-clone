@@ -1,15 +1,22 @@
 import logging
+import sys
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.logging.app_logging import LoggingSetter
-from api.routers import tweet_route
+from api.routers import tweet_route, comment_route
 from api.init_db import init
 
+file_handler = logging.FileHandler(filename='app.log')
+stdout_handler = logging.StreamHandler(sys.stdout)
+handlers = [file_handler, stdout_handler]
 
-setter = LoggingSetter()
-setter.set_logger()
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
+    handlers=handlers
+)
+
 logger = logging.getLogger(__name__)
 logger.info("session starts.")
 
@@ -32,10 +39,10 @@ async def startup_event():
     init()
     logger.info('startup fisnihed successfully')
 
-# @app.on_event("shutdown")
-# def shutdown_event():
-#     logger.info('shutdown fisnihed successfully')
-#     # TODO add clean up methods
+@app.on_event("shutdown")
+def shutdown_event():
+    logger.info('shutdown fisnihed successfully')
+    # TODO add clean up  i.e. destroy development db
 
 @app.get('/')
 def hello_world():
@@ -43,3 +50,4 @@ def hello_world():
 
 
 app.include_router(tweet_route.router, prefix="/api")
+app.include_router(comment_route.router, prefix="/api")

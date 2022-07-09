@@ -7,15 +7,16 @@ from sqlalchemy.orm import sessionmaker
 
 from api.infra.db.base import Base
 
-if os.environ.get('db', 'sqlite'):
-    SQLALCHEMY_DATABASE_URL = "sqlite:///./twitter_app.db"
+# if os.environ.get('DB_TYPE') == 'sqlite':
+#     SQLALCHEMY_DATABASE_URL = "sqlite:///./twitter_app.db"
 
-else:
-    db_user = os.environ.get('DB_USER', 'user')
-    db_pass = os.environ.get('DB_PASS', 'pass')
-    db_endpoint = os.environ.get('DB_ENDPOINT', 'localhost:5432')
+# elif os.environ.get('DB_TYPE') == 'postgres':
+db_user = os.environ.get('DB_USER', 'user')
+db_pass = os.environ.get('DB_PASS', 'pass')
+db_endpoint = os.environ.get('DB_ENDPOINT', 'development-db:5432')
 
-    SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_endpoint}/app_db"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_pass}@{db_endpoint}/app_db"
+# SQLALCHEMY_DATABASE_URL = os.environ.get('DATABASE_URL')
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, pool_pre_ping=True

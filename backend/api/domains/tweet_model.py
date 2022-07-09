@@ -9,7 +9,7 @@ class Tweet(BaseModel):
     images: str or None = None
     updated_at: datetime or str = None
     deleted_at: datetime or str or None =None
-    blocked: bool or None = None
+    blocked: bool or None = False
 
     class Config:
         orm_mode = True

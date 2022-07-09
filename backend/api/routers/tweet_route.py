@@ -61,7 +61,7 @@ def update_tweet(request: InputTweet, session: Session = Depends(get_session)):
 def delete_tweet(request: InputTweet, session: Session = Depends(get_session)):
     try:
         service = TweetService(session)
-        res = service.create_tweet(request)
+        res = service.delete_tweet(request)
         if res is not None:
             logger.info('delete tweet')
             return res

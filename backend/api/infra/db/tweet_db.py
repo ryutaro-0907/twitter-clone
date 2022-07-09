@@ -1,28 +1,13 @@
 import logging
 
 from typing import List
-from sqlalchemy import Column, Integer, String, DateTime, TIMESTAMP
-from sqlalchemy.sql import func
 from sqlalchemy.orm import Session
 
 from dataclasses import dataclass
 
 from api.domains.tweet_model import Tweet, InputTweet
-from api.infra.db.base import Base
-
+from api.infra.db.orms import TweetOrm
 logger = logging.getLogger(__name__)
-
-class TweetOrm(Base):
-    __tablename__ = 'tweets'
-    id = Column(Integer, primary_key=True, nullable=False)
-    text = Column(String(255))
-    user_id = Column(Integer)
-    images = Column(String(255))
-
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    deleted_at  = Column(DateTime, nullable=True)
-
 
 @dataclass
 class TweetDBHandler:

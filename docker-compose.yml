@@ -5,6 +5,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    container_name: backend
     volumes:
       - ./backend:/src
       - '${LOCAL_DATA_DIR}:/src/data'
@@ -12,8 +13,9 @@ services:
       - 8000:8000
     environment:
       # - APP_SETTINGS=project.config.DevelopmentConfig
-      - DB_ENDPOINT=development-db
-      # - DATABASE_URL=postgres://postgres:postgres@development-db:5432/dev_db
+      - DB_ENDPOINT=${DB_ENDPOINT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
       # - DATABASE_TEST_URL=postgres://postgres:postgres@development-db:5432/test_db
       # - SECRET_KEY=ZQbn05PDeA7v11
     depends_on:
@@ -23,11 +25,16 @@ services:
     build:
       context: ./postgres
       dockerfile: Dockerfile
+    container_name: development-db
     ports:
-      - 5436:5432
+      - 5432:5432
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=pass
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: app_db
+
+    volumes:
+      - '${LOCAL_DATA_DIR}/postgresql:/var/lib/postgresql/data'
 
   # nginx:
   #   build:
