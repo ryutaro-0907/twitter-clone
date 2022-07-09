@@ -47,7 +47,9 @@ class TweetDBHandler:
 
     def update_tweet(self, info: InputTweet) -> Tweet or None:
         try:
-            tweet: TweetOrm = self.session.query(TweetOrm).filter(TweetOrm.id == info.id).first()
+            tweet: TweetOrm = (
+                self.session.query(TweetOrm).filter(TweetOrm.id == info.id).first()
+            )
 
             tweet.text = info.text
             tweet.images = info.images
@@ -60,11 +62,11 @@ class TweetDBHandler:
         except Exception as e:
             raise Exception("Could not update tweet: %s", e)
 
-    def delete_tweet(self, tweet_id:int) -> None:
+    def delete_tweet(self, tweet_id: int) -> None:
         try:
             tweet = self.session.query(TweetOrm).filter(TweetOrm.id == tweet_id).first()
             res = Tweet.from_orm(tweet)
-            
+
             try:
                 self.session.delete(tweet)
                 logger.info("deleting tweet: %s", tweet_id)

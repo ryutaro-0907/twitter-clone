@@ -62,7 +62,9 @@ class CommentDBHandler:
 
     def update_comment(self, info: InputComment) -> Comment:
         try:
-            comment: CommentOrm = self.session.query(CommentOrm).filter(CommentOrm.id == info.id).first()
+            comment: CommentOrm = (
+                self.session.query(CommentOrm).filter(CommentOrm.id == info.id).first()
+            )
 
             comment.comment = info.comment
             comment.images = info.images
@@ -72,13 +74,16 @@ class CommentDBHandler:
             logger.info("updated tweet: %s", comment)
             return Comment.from_orm(comment)
 
-
         except Exception as e:
             raise Exception("Could not update tweet: %s", e)
 
     def delete_comment(self, comment_id: int) -> None:
         try:
-            tweet = self.session.query(CommentOrm).filter(CommentOrm.id == comment_id).first()
+            tweet = (
+                self.session.query(CommentOrm)
+                .filter(CommentOrm.id == comment_id)
+                .first()
+            )
             res = Comment.from_orm(tweet)
 
             try:

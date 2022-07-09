@@ -20,7 +20,7 @@ class InputTweet(BaseModel):
     user_id: int
     text: str
     images: str or None = None
-    id: int =None
+    id: int = None
 
     class Config:
         orm_mode = True
