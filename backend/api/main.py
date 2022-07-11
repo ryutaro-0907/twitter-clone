@@ -7,17 +7,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.routers import tweet_route, comment_route
 from api.init_db import init
 
-file_handler = logging.FileHandler(filename="app.log")
-stdout_handler = logging.StreamHandler(sys.stdout)
-handlers = [file_handler, stdout_handler]
+from logging.config import dictConfig
+import logging
+from .settings import LogConfig
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s",
-    handlers=handlers,
-)
-
-logger = logging.getLogger(__name__)
+dictConfig(LogConfig().dict())
+logger = logging.getLogger('app_logger')
 logger.info("session starts.")
 
 app = FastAPI()

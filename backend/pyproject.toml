@@ -2,18 +2,19 @@
 name = "envshare-back"
 version = "0.1.0"
 description = ""
-authors = ["None"]
+authors = ["ryutaro.furutani@gmail.com"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.75.2"
-uvicorn = "^0.17.6"
 pytest = "^7.1.2"
 email-validator = "^1.2.1"
 SQLAlchemy = "^1.4.36"
 python-ulid = "^1.1.0"
 pytest-mock = "^3.7.0"
-psycopg2-binary = "^2.9.3" 
+psycopg2-binary = "^2.9.3"
+websockets = "^10.3"
+uvicorn = {extras = ["standard"], version = "^0.18.2"}
 
 [tool.poetry.dev-dependencies]
 
