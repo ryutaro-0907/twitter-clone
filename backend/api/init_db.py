@@ -1,6 +1,7 @@
 """Init Dev DB."""
 import logging
 import os
+import profile
 
 
 from sqlalchemy import create_engine
@@ -44,7 +45,7 @@ def init() -> None:
     """init."""
     with SessionLocal() as db:
         handler = TweetDBHandler(db)
-        tweet = InputTweet(user_id=1, text="test tweet")
+        tweet = InputTweet(user_id=1, text="test tweet", username="test username", profile_image="test profile imagetest.com")
         handler.create_tweet(tweet)
 
         handler = CommentDBHandler(db)

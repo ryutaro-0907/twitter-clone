@@ -5,8 +5,12 @@ from pydantic import BaseModel
 class Tweet(BaseModel):
     id: int
     created_at: datetime or str
+
     text: str
     user_id: int
+    username: str
+    profile_image: str
+
     images: str or None = None
     updated_at: datetime or str = None
     deleted_at: datetime or str or None = None
@@ -19,8 +23,9 @@ class Tweet(BaseModel):
 class InputTweet(BaseModel):
     user_id: int
     text: str
-    images: str or None = None
-    id: int = None
+    username: str
+    profile_image: str
 
+    images: str or None = None
     class Config:
         orm_mode = True

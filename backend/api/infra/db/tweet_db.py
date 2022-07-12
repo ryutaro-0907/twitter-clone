@@ -18,7 +18,7 @@ class TweetDBHandler:
     def create_tweet(self, input: InputTweet) -> Tweet or None:
         try:
             tweet = TweetOrm(
-                text=input.text, user_id=input.user_id, images=input.images
+                text=input.text, user_id=input.user_id, images=input.images, username=input.username, profile_image=input.profile_image
             )
             self.session.add(tweet)
             self.session.commit()

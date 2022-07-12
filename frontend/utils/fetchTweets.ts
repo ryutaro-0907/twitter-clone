@@ -1,13 +1,10 @@
 import { Tweet } from '../typings';
 
 export const fetchTweets = async () => {
-    const BaseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/getTweets`;
+    const BaseUrl = '/server/getTweets'
     const result = await fetch(BaseUrl);
+    const tweets:Tweet[] = await result.json();
 
-    const data = await result.json();
-
-    const tweets:Tweet[] = data.tweets;
-
-    return tweets;
+    return tweets as Tweet[];
 
 }
