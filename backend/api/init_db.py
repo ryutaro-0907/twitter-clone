@@ -6,12 +6,15 @@ import profile
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import contextlib
+from sqlalchemy import MetaData
 
 from api.domains.tweet_model import InputTweet
 from api.domains.comment_model import InputComment
 from api.infra.db.base import Base
 from api.infra.db.tweet_db import TweetDBHandler
 from api.infra.db.comment_db import CommentDBHandler
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,23 +44,29 @@ Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 
-def init() -> None:
-    """init."""
+def insert_initial_data_to_db() -> None:
     with SessionLocal() as db:
         handler = TweetDBHandler(db)
-        tweet = InputTweet(user_id=1, text="test tweet", username="test username", profile_image="test profile imagetest.com")
+
+        tweet = InputTweet(user_id=1, text="For now, you can only add text and comment. Also login function is not implemented yet.", username="Test user", profile_image="https://links.papareact.com/gll")
         handler.create_tweet(tweet)
 
         handler = CommentDBHandler(db)
-        comment = InputComment(user_id=1, tweet_id=1, comment="test comment")
+        comment = InputComment(user_id=1, tweet_id=1, username='comment user', comment="test comment")
         handler.create_comment(comment)
+
+def clear_db() -> None:
+    meta = MetaData()
+    with contextlib.closing(engine.connect()) as con:
+        trans = con.begin()
+        for table in reversed(meta.sorted_tables):
+            con.execute(table.delete())
+        trans.commit()
 
 
 def main() -> None:
-    logger.info("Creating initial data")
-    init()
-    logger.info("Initial data created")
-
+    insert_initial_data_to_db()
+    clear_db()
 
 if __name__ == "__main__":
     main()

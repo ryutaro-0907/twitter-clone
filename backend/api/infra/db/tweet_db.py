@@ -30,8 +30,11 @@ class TweetDBHandler:
     def fetch_tweet_by_id(self, tweet_id: int) -> Tweet or None:
         try:
             tweet: Tweet = (
-                self.session.query(Tweet).filter(Tweet.id == tweet_id).first()
-            )
+                self.session.query(Tweet).filter(Tweet.id == tweet_id)
+                .first()
+                .order_by(Tweet.created_at.desc())
+                )
+
             return tweet
         except Exception as e:
             logger.error("could not fetch tweet: %s", e)
@@ -39,7 +42,8 @@ class TweetDBHandler:
 
     def fetch_tweets(self) -> List[Tweet] or None:
         try:
-            tweets = self.session.query(TweetOrm).all()
+            tweets:list(Tweet) = self.session.query(TweetOrm).all()
+            tweets.reverse()
             return tweets
         except Exception as e:
             logger.error("could not fetch tweets: %s", e)

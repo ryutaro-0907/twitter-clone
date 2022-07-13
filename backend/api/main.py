@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.routers import tweet_route, comment_route
-from api.init_db import init
+from api.init_db import insert_initial_data_to_db, clear_db
 
 from logging.config import dictConfig
 import logging
@@ -32,20 +32,21 @@ app.add_middleware(
 async def startup_event():
     pass
     logger.info("startup started")
-    init()
+    insert_initial_data_to_db()
     logger.info("startup fisnihed successfully")
 
 
 @app.on_event("shutdown")
 def shutdown_event():
     logger.info("shutdown fisnihed successfully")
+    clear_db()
     # TODO add clean up  i.e. destroy development db
 
 
 @app.get("/")
 def hello_world():
-    return "welcome to twitter clone server."
+    return "welcome to twitter clone app server. For reference please go to /docs"
 
 
-app.include_router(tweet_route.router, prefix="/api")
-app.include_router(comment_route.router, prefix="/api")
+app.include_router(tweet_route.router, prefix="/server")
+app.include_router(comment_route.router, prefix="/server")

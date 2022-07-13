@@ -27,6 +27,7 @@ class CommentOrm(Base):
     comment = Column(String(255))
     user_id = Column(Integer)
     tweet_id = Column(Integer, ForeignKey("tweets.id"))
+    username = Column(String(255))
 
     images = Column(String(255), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

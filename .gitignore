@@ -4,6 +4,9 @@
 # vscode
 /.history
 
+# env
+# .envrc
+
 # python
 .venv
 __pycache__

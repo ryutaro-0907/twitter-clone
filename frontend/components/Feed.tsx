@@ -3,7 +3,7 @@ import { RefreshIcon } from '@heroicons/react/outline';
 import TweetBox from './TweetBox';
 import { Tweet } from '../typings';
 import TweetComponent from './Tweet';
-import { fetchTweets } from '../utils/fetchTweets';
+import { fetchTweets } from '../utils/tweet_handler';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -16,9 +16,17 @@ function Feed( { tweets: tweetsProp }: Props )  {
 
   const handleRefresh = async () => {
     const refreshToast = toast.loading("Refreshing Tweets...");
-    const tweets = await fetchTweets();
-    setTweets(tweets)
 
+    const data = await fetch('http://localhost:8000/server/tweets')
+    const tweets: Tweet[] = await data.json()
+
+    console.log('tweets fetched succesfully;')
+    if (tweets === undefined) {
+      throw new Error(`Tweets cannot be undefined.`);
+    } else {
+      console.log('Tweets fetched successfully')
+      setTweets(tweets)
+    }
     toast.success("Feed updated!", {
       id: refreshToast
     })
@@ -40,7 +48,6 @@ function Feed( { tweets: tweetsProp }: Props )  {
         <div>
           <TweetBox setTweets={setTweets}/>
         </div>
-
         <div>
           {tweets.map(tweet => (
             <TweetComponent key={tweet.id} tweet={tweet}/>

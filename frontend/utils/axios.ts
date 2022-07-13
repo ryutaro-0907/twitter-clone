@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const client = axios.create({
+    baseURL:'http://nginx:8080/server/' ,
     // baseURL: process.env.BASE_URL,
-    baseURL: 'http://0.0.0.0:8000',
     headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
     // transformRequest: [
     //     // TODO: add method to convert data from CamelCase to SnakeCase.

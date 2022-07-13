@@ -21,6 +21,7 @@ class CommentDBHandler:
                 comment=input.comment,
                 user_id=input.user_id,
                 tweet_id=input.tweet_id,
+                username=input.username,
                 images=input.images,
             )
             logger.info("creating comment")
@@ -47,11 +48,12 @@ class CommentDBHandler:
                 .filter(CommentOrm.tweet_id == tweet_id)
                 .all()
             )
+            comments.reverse()
             return comments
         except Exception as e:
             logger.error("could not fetch comments: %s", e)
             raise Exception("Could not fetch comments")
-            
+
 
     def update_comment(self, info: InputComment) -> Comment:
         try:

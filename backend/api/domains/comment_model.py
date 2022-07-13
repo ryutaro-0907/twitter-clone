@@ -8,6 +8,7 @@ class Comment(BaseModel):
 
     tweet_id: int
     user_id: int
+    username: str
 
     comment: str
     images: str or None = None
@@ -24,10 +25,9 @@ class Comment(BaseModel):
 class InputComment(BaseModel):
     user_id: int
     tweet_id: int
+    username: str 
 
     comment: str
-
-    id: int = None
     images: str or None = None
 
     class Config:
