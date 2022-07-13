@@ -47,7 +47,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## NOTE for development.
 ### Frontend
-if data is not fetching from backend, please reload backend code to reload.
+if data is not fetching from backend, please reload backend code.
 
 ``` i.e.
 Server Error
