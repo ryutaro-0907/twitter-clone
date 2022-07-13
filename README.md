@@ -1,4 +1,13 @@
-# twitter-colne
+# Twitter Clone with Python, Next.js and Nginx.
+
+## Tecnologies
+- FastApi
+- Next.js
+- Typescript
+- Tailwind.css
+- Postgres
+- Docker
+- Nginx
 
 ## Getting Started
 
