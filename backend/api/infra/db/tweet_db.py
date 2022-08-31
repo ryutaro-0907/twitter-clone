@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class TweetDBHandler:
     session: Session
 
-    def create_tweet(self, input: InputTweet) -> Tweet or None:
+    def create_tweet(self, input: InputTweet) -> Tweet:
         try:
             tweet = TweetOrm(
                 text=input.text, user_id=input.user_id, images=input.images, username=input.username, profile_image=input.profile_image
@@ -27,7 +27,7 @@ class TweetDBHandler:
         except Exception as e:
             logger.error("Error creating tweet: %s", e)
 
-    def fetch_tweet_by_id(self, tweet_id: int) -> Tweet or None:
+    def fetch_tweet_by_id(self, tweet_id: int) -> Tweet:
         try:
             tweet: Tweet = (
                 self.session.query(Tweet).filter(Tweet.id == tweet_id)
@@ -40,7 +40,7 @@ class TweetDBHandler:
             logger.error("could not fetch tweet: %s", e)
             return None
 
-    def fetch_tweets(self) -> List[Tweet] or None:
+    def fetch_tweets(self) -> List[Tweet]:
         try:
             tweets:list(Tweet) = self.session.query(TweetOrm).all()
             tweets.reverse()
@@ -49,7 +49,7 @@ class TweetDBHandler:
             logger.error("could not fetch tweets: %s", e)
             return None
 
-    def update_tweet(self, info: InputTweet) -> Tweet or None:
+    def update_tweet(self, info: InputTweet) -> Tweet:
         try:
             tweet: TweetOrm = (
                 self.session.query(TweetOrm).filter(TweetOrm.id == info.id).first()
