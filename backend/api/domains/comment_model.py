@@ -11,12 +11,12 @@ class Comment(BaseModel):
     username: str
 
     comment: str
-    images: str or None = None
+    images: str = None
 
     blocked: bool = False
 
-    updated_at: datetime or str = None
-    deleted_at: datetime or str or None = None
+    updated_at: str = None
+    deleted_at: str = None
 
     class Config:
         orm_mode = True
@@ -25,10 +25,10 @@ class Comment(BaseModel):
 class InputComment(BaseModel):
     user_id: int
     tweet_id: int
-    username: str 
+    username: str
 
     comment: str
-    images: str or None = None
+    images: str = None
 
     class Config:
         orm_mode = True

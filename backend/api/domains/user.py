@@ -2,31 +2,29 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class Tweet(BaseModel):
+class User(BaseModel):
     id: int
-
     created_at: str
-    user_id: int
-    username: str
-    profile_image: str
 
-    text: str
-    images: str = None
+    username: str
+    email: str
+    password: str
+
+    hassed_password: str
 
     updated_at: str = None
     deleted_at: str = None
-    blocked: bool = False
 
     class Config:
         orm_mode = True
 
 
-class InputTweet(BaseModel):
-    user_id: int
+class InputComment(BaseModel):
     username: str
-    profile_image: str
+    email: str
+    password: str
 
-    text: str
-    images: str = None
+    profile_image: str = None
+
     class Config:
         orm_mode = True
