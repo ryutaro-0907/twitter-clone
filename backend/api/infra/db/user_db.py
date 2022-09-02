@@ -1,6 +1,5 @@
 import logging
 
-from typing import List
 from sqlalchemy.orm import Session
 
 from dataclasses import dataclass
