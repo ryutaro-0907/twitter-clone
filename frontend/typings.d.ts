@@ -1,34 +1,50 @@
 export interface Tweet extends TweetBody {
-    _id: string
-    _createdAt: string
-    updatedAt: string
-    _rev: string
-    _type: 'tweet'
-    blockTweet: boolean
+    id: number
+    created_at: str
+    user_id: number
+    updated_at?: str
+    deleted_at?: str
+    blocked?: bool
 }
 
 export type TweetBody = {
-    text: string
-    username: string
-    profileImage: string
-    image?: string
+    user_id: number
+    text: str
+    username?: str
+    profile_image: str
+    images?: str
 }
 
 export type CommentBody = {
-    comment: string
-    tweetId: string
-    profileImage: string
-    username: string
+    tweet_id: number
+    user_id: number
+    username: str
+    profile_image: str
+
+    comment: str
+    images?: str
+
+    blocked?: bool = false
+
+
+
+
 }
 
 export interface Comment extends CommentBody {
-    _id: string
-    _createdAt: string
-    updatedAt: string
-    _rev: string
-    _type: 'comment'
-    tweet: {
-        _ref: string
-        _type: 'reference'
-    }
+    id: number
+    created_at: datetime
+    updated_at: datetime = null
+    deleted_at: datetime = null
+
+    user_id: number
+    tweet_id: number
+    username: str
+    profile_image: str
+
+    comment: str
+    images: str
+    blocked?: bool = false
+
+
 }

@@ -8,10 +8,10 @@ import {
     UploadIcon,
 } from '@heroicons/react/outline';
 
-import { fetchComments } from '../utils/fetchComments';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
+import internal from 'stream';
 
 
 interface Props {
@@ -24,10 +24,21 @@ function Tweet({ tweet } : Props) {
   const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false);
   const [input, setInput] = useState<string>('');
 
-  const { data: session } = useSession();
+//   const { data: session } = useSession();
+  const session = true
+  const fetchCommentsById = async (tweet_id: number) => {
+    try {
+      const data = await fetch(`http://localhost:8080/server/comments?tweet_id=${tweet_id}`)
+      const comments: Comment[] = await data.json()
+      console.log('tweets fetched succesfully;')
+
+      return comments
+    } catch (err) {
+      throw new Error('error fetching tweet: ' + err!)
+  }}
 
   const refreshComments = async () => {
-    const comments: Comment[] = await fetchComments(tweet._id);
+    const comments: Comment[] = await fetchCommentsById(tweet.id);
     setComments(comments);
   }
 
@@ -39,13 +50,20 @@ function Tweet({ tweet } : Props) {
   const postComment = async () => {
     const commentInfo: CommentBody = {
         comment: input,
-        username: session?.user?.name || 'Unknown user',
-        profileImage: session?.user?.image || 'https://links.papareact.com/gll',
-        tweetId: tweet._id,
+        username: 'test user',
+        profile_image: 'https://links.papareact.com/gll',
+        user_id: 1,
+        tweet_id: tweet.id,
+        // username: session?.user?.name || 'Unknown user',
+        // profileImage: session?.user?.image || 'https://links.papareact.com/gll',
+        // tweetId: tweet._id,
     }
 
-    const result = await fetch(`/api/addComment`, {
+    const result = await fetch(`http://localhost:8080/server/comments`, {
         body: JSON.stringify(commentInfo),
+        headers: {
+            'Content-type': 'application/json',
+          },
         method: 'POST',
     })
 
@@ -53,7 +71,7 @@ function Tweet({ tweet } : Props) {
 
     const json = await result.json();
 
-    const newComments = await fetchComments(tweet._id);
+    const newComments = await fetchCommentsById(tweet.id);
     setComments(newComments);
 
     toast('Comment posted successfully', {
@@ -82,7 +100,7 @@ function Tweet({ tweet } : Props) {
         <div className="flex space-x-3">
             <img
                 className="h-10 w-10 rounded-full object-cover"
-                src={tweet.profileImage} alt=""
+                src={tweet.profile_image} alt=""
             />
             <div>
                 <div className='flex items-center space-x-1'>
@@ -94,17 +112,17 @@ function Tweet({ tweet } : Props) {
 
                     <TimeAgo
                         className='text-sm text-gray-500'
-                        date={tweet._createdAt}
+                        date={tweet.created_at}
                      />
                 </div>
                 <p className='pt-1'>{tweet.text}</p>
 
                 {
-                    tweet.image && (
+                    tweet.images && (
                         <img
                             className="m-5 ml-0 mb-1 max-h-60
                                         rounded-lg object-cover shadow-sm"
-                            src={tweet.image} alt=''
+                            src={tweet.images} alt=''
                         />
                     )
                 }
@@ -154,11 +172,11 @@ function Tweet({ tweet } : Props) {
             <div className='my-2 mt-5 max-h-44 space-y-5 overflow-y-scroll border-t
             border-gray-100 p-5'>
                 {comments.map((comment) => (
-                    <div key={comment._id} className='relative flex space-x-2'>
+                    <div key={comment.id} className='relative flex space-x-2'>
                         <hr className='absolute left-5 top-10 h-8 border-x
                         border-twitter/30'  />
                         <img
-                            src={comment.profileImage}
+                            src={comment.profile_image}
                             className='mt-5 h-7 w-7
                                 rounded-full object-cover'
                             alt=''
@@ -171,7 +189,7 @@ function Tweet({ tweet } : Props) {
                                 </p>
                                 <TimeAgo
                                     className="text-sm text-gray-500"
-                                    date={comment._createdAt}
+                                    date={comment.created_at}
                                 />
                             </div>
                             <p>

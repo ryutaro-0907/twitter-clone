@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/outline";
 import { useSession } from 'next-auth/react';
 import { Tweet, TweetBody } from '../typings';
-import { fetchTweets } from '../utils/fetchTweets';
+import { fetchTweets } from '../utils/tweet_handler';
 import toast from 'react-hot-toast';
 
 
@@ -19,7 +19,8 @@ function TweetBox({ setTweets }: Props) {
     const [input, setInput] = useState<string>("");
     const [image, setImage] = useState<string>("");
 
-    const { data: session } = useSession();
+    // const { data: session } = useSession();
+    const session = true
 
     const [imageUrlBoxIsOpen, setImageUrlBoxIsOpen] = useState<boolean>(false)
     const imageInputRef = useRef<HTMLInputElement>(null);
@@ -36,22 +37,28 @@ function TweetBox({ setTweets }: Props) {
 
     const postTweet = async () => {
         const tweetInfo: TweetBody = {
+            user_id: 1,
             text: input,
-            username: session?.user?.name || 'Unknown user',
-            profileImage: session?.user?.image || 'https://links.papareact.com/gll',
-            image: image,
+            username: 'test user (login is not implemented yet.)',
+            profile_image: 'https://links.papareact.com/gll',
+            // username: session?.user?.name || 'Unknown user',
+            // profileImage: session?.user?.image || 'https://links.papareact.com/gll',
+            // images: image,
         }
 
-        const result = await fetch(`/api/addTweet`, {
+        const result = await fetch('http://localhost:8080/server/tweets', {
             body: JSON.stringify(tweetInfo),
             method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+              },
         })
 
         console.log('result', result)
 
         const json = await result.json();
-
-        const newTweets = await fetchTweets();
+        const data = await fetch('http://localhost:8080/server/tweets')
+        const newTweets: Tweet[] = await data.json()
         setTweets(newTweets);
 
         toast('Tweet posted successfully', {
@@ -79,7 +86,8 @@ function TweetBox({ setTweets }: Props) {
         <img
             className="h-14 w-14 object-cover
             rounded-full mt-4 "
-            src={session?.user?.image || "https://links.papareact.com/gll"}
+            // src={session?.user?.image || "https://links.papareact.com/gll"}
+            src="https://links.papareact.com/gll"
             alt=""
         />
         <div className="flex flex-1 items-center pl-2">
