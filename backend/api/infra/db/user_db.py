@@ -1,5 +1,4 @@
 import logging
-from tkinter.tix import DisplayStyle
 
 from typing import List
 from sqlalchemy.orm import Session
@@ -23,11 +22,21 @@ class UserDBHandler:
                 username=input.username,
                 email=input.email,
                 password=Hash.get_password_hash(input.password),
+
             )
             self.session.add(user)
             self.session.commit()
             logger.info("User created successfully")
-            return UserDisplay.from_orm(user)
+            logger.info(user.created_at)
+
+            user_display = UserDisplay(
+                id=user.id,
+                username=user.username,
+                email=user.email,
+            )
+            user_display = UserDisplay.from_orm(user)
+
+            return user_display
 
         except Exception as e:
             logger.error("Error creating user: %s", e)

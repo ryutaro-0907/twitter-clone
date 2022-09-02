@@ -33,7 +33,7 @@ def create_user(request: UserCreate, session: Session = Depends(get_session)):
         logger.error("could not create service instance")
 
 
-@router.get("/users", response_model=UserDisplay)
+@router.get("/user/{email}", response_model=UserDisplay)
 def user_login(request: UserLogin, session: Session = Depends(get_session)):
     try:
         service = UserService(session)

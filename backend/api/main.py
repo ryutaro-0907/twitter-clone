@@ -1,23 +1,21 @@
 import logging
-import sys
+from logging.config import dictConfig
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routers import tweet_route, comment_route, user_route
-from api.init_db import insert_initial_data_to_db, clear_db
-
-from logging.config import dictConfig
-import logging
+from .routers import tweet_route, comment_route, user_route
+from .init_db import insert_initial_data_to_db, clear_db
 from .settings import LogConfig
 
 dictConfig(LogConfig().dict())
 logger = logging.getLogger('app_logger')
 logger.info("session starts.")
 
-app = FastAPI()
 
 origins = ["*"]
+
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -45,8 +43,11 @@ def shutdown_event():
 
 @app.get("/")
 def hello_world():
-    return "welcome to twitter clone app server. For reference please go to /docs"
+    return "welcome to twitter clone app server. For reference please go to http://0.0.0.0:8000/docs"
 
 app.include_router(user_route.router, prefix="/server")
 app.include_router(tweet_route.router, prefix="/server")
 app.include_router(comment_route.router, prefix="/server")
+
+class APPTaker:
+    app: FastAPI = app

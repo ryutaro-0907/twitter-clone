@@ -24,8 +24,10 @@ class UserUpdate(UserBase):
     password: str = None
 
 
-class UserDisplay(UserBase):
+class UserDisplay(BaseModel):
     id: int
+    username: str = None
+    email: str = None
     class Config():
         orm_mode = True
 

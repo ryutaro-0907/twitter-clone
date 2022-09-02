@@ -5,7 +5,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from api.infra.db.base import Base
+from ...infra.db.base import Base
 
 # if os.environ.get('DB_TYPE') == 'sqlite':
 #     SQLALCHEMY_DATABASE_URL = "sqlite:///./twitter_app.db"
