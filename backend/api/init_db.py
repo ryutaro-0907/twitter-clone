@@ -48,12 +48,20 @@ def insert_initial_data_to_db() -> None:
     with SessionLocal() as db:
         handler = TweetDBHandler(db)
 
-        tweet = InputTweet(user_id=1, text="For now, you can only add text and comment. Also login function is not implemented yet.", username="Test user", profile_image="https://links.papareact.com/gll")
+        tweet = InputTweet(
+            user_id=1,
+            text="For now, you can only add text and comment. Also login function is not implemented yet.",
+            username="Test user",
+            profile_image="https://links.papareact.com/gll",
+        )
         handler.create_tweet(tweet)
 
         handler = CommentDBHandler(db)
-        comment = InputComment(user_id=1, tweet_id=1, username='comment user', comment="test comment")
+        comment = InputComment(
+            user_id=1, tweet_id=1, username="comment user", comment="test comment"
+        )
         handler.create_comment(comment)
+
 
 def clear_db() -> None:
     meta = MetaData()
@@ -67,6 +75,7 @@ def clear_db() -> None:
 def main() -> None:
     insert_initial_data_to_db()
     clear_db()
+
 
 if __name__ == "__main__":
     main()

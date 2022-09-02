@@ -34,8 +34,9 @@ class CommentOrm(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     deleted_at = Column(DateTime, nullable=True)
 
+
 class UserOrm(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String)
     email = Column(String)

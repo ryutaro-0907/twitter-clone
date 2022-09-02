@@ -54,7 +54,6 @@ class CommentDBHandler:
             logger.error("could not fetch comments: %s", e)
             raise Exception("Could not fetch comments")
 
-
     def update_comment(self, info: InputComment) -> Comment:
         try:
             comment: CommentOrm = (

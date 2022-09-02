@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class UserBase(BaseModel):
     username: str
     email: str
@@ -28,11 +29,12 @@ class UserDisplay(BaseModel):
     id: int
     username: str = None
     email: str = None
-    class Config():
+
+    class Config:
         orm_mode = True
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     user = UserCreate(
         username="test",
         email="test@example.com",

@@ -1,10 +1,13 @@
 from pydantic import BaseModel
 
+
 class LogConfig(BaseModel):
     """Logging configuration to be set for the server"""
 
     LOGGER_NAME: str = "app_logger"
-    LOG_FORMAT: str = "[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s"
+    LOG_FORMAT: str = (
+        "[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s"
+    )
     LOG_LEVEL: str = "DEBUG"
 
     # Logging config

@@ -20,6 +20,8 @@ def create_user(request: UserCreate, session: Session = Depends(get_session)):
     try:
         service = UserService(session)
 
+        if service.user_exist(request.email):
+            return "User already exists, please Login."
         try:
             res = service.create_user(request)
             if isinstance(res, UserDisplay):
@@ -68,7 +70,7 @@ def delete_user(email: str, session: Session = Depends(get_session)):
         service = UserService(session)
         service.delete_user(email)
 
-        return 'user deleted successfully'
+        return "user deleted successfully"
 
     except Exception as e:
         HTTPException(500, "Couldn't create tweet", e)

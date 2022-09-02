@@ -9,7 +9,7 @@ from .init_db import insert_initial_data_to_db, clear_db
 from .settings import LogConfig
 
 dictConfig(LogConfig().dict())
-logger = logging.getLogger('app_logger')
+logger = logging.getLogger("app_logger")
 logger.info("session starts.")
 
 
@@ -45,9 +45,11 @@ def shutdown_event():
 def hello_world():
     return "welcome to twitter clone app server. For reference please go to http://0.0.0.0:8000/docs"
 
+
 app.include_router(user_route.router, prefix="/server")
 app.include_router(tweet_route.router, prefix="/server")
 app.include_router(comment_route.router, prefix="/server")
+
 
 class APPTaker:
     app: FastAPI = app

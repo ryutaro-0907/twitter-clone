@@ -16,13 +16,19 @@ logger = logging.getLogger(__name__)
 class UserDBHandler:
     session: Session
 
+    def user_exist(self, email: str) -> bool:
+        user_exist = self.session.query(UserOrm).filter(UserOrm.email == email)
+        if user_exist:
+            return True
+        else:
+            return False
+
     def create_user(self, input: UserCreate) -> UserDisplay:
         try:
             user = UserOrm(
                 username=input.username,
                 email=input.email,
                 password=Hash.get_password_hash(input.password),
-
             )
             self.session.add(user)
             self.session.commit()
@@ -41,13 +47,11 @@ class UserDBHandler:
         except Exception as e:
             logger.error("Error creating user: %s", e)
 
-
     def user_login(self, input: UserLogin) -> UserDisplay:
         try:
             user: UserOrm = (
-                self.session.query(UserOrm).filter(UserOrm.email == input.email)
-                .first()
-                )
+                self.session.query(UserOrm).filter(UserOrm.email == input.email).first()
+            )
 
             if Hash.verify_password(user.password, input.password):
                 return UserDisplay.from_orm(user)
@@ -58,7 +62,6 @@ class UserDBHandler:
         except Exception as e:
             logger.error("could not find user, please sign up: %s", e)
             return None
-
 
     def update_user(self, input: UserUpdate) -> UserDisplay:
         try:

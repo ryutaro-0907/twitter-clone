@@ -28,5 +28,6 @@ class InputTweet(BaseModel):
 
     text: str
     images: str = None
+
     class Config:
         orm_mode = True
