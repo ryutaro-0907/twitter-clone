@@ -9,7 +9,7 @@ class UserService:
     def __init__(self, session: Session):
         self.handler = UserDBHandler(session)
 
-    def user_exist(self, email: str) -> bool:
+    def user_exists(self, email: str) -> bool:
         return self.handler.user_exist(email)
 
     def create_user(self, request: UserCreate) -> UserDisplay:

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class UserDBHandler:
     session: Session
 
-    def user_exist(self, email: str) -> bool:
+    def user_exists(self, email: str) -> bool:
         user_exist = self.session.query(UserOrm).filter(UserOrm.email == email)
         if user_exist:
             return True

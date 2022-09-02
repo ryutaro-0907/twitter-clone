@@ -20,7 +20,7 @@ def create_user(request: UserCreate, session: Session = Depends(get_session)):
     try:
         service = UserService(session)
 
-        if service.user_exist(request.email):
+        if service.user_exists(request.email):
             return "User already exists, please Login."
         try:
             res = service.create_user(request)
