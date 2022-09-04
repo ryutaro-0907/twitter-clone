@@ -1,15 +1,50 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router'
+
+import { userSlice } from '../redux/userSlice';
+import { store } from '../redux/store';
+
+interface UserLogin {
+    email: string;
+    password: string;
+}
 
 function login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const submitAndGetSession = () => {
-        console.log('logging in')
-        // getting session if user exists.
+    const router = useRouter()
 
+    const dispatch = useDispatch();
+    const { login, setStateUsername, setStateEmail } = userSlice.actions;
+
+    const userLogin = async (e) => {
+        e.preventDefault();
+
+        const userLogin: UserLogin = {
+            email: email,
+            password: password,
+        }
+
+        const res  = fetch('http://localhost:8080/server/users/login', {
+            body: JSON.stringify(userLogin),
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+              },
+
+        }).then(response => {
+            const data = response.json()
+
+            dispatch(login())
+            dispatch(setStateEmail(email))
+            dispatch(setStateUsername('afdsfsaf'))
+
+            router.push('/')
+
+        }).catch(() => alert('Email is already taken, please login'))
     }
-
 
     return (
       <div>
@@ -38,6 +73,7 @@ function login() {
                       <button
                           type="submit"
                           disabled={!email || !password}
+                          onClick={userLogin}
                           className="w-full text-center py-3 rounded
                            bg-blue-500 text-white
                            hober:bg-blue-200 focus:outline-none my-1">

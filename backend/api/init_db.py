@@ -11,7 +11,9 @@ from sqlalchemy import MetaData
 
 from api.domains.tweet_model import InputTweet
 from api.domains.comment_model import InputComment
+from api.domains.user_model import UserCreate
 from api.infra.db.base import Base
+from api.infra.db.user_db import UserDBHandler
 from api.infra.db.tweet_db import TweetDBHandler
 from api.infra.db.comment_db import CommentDBHandler
 
@@ -46,6 +48,10 @@ Base.metadata.create_all(bind=engine)
 
 def insert_initial_data_to_db() -> None:
     with SessionLocal() as db:
+        handler = UserDBHandler(db)
+        user = UserCreate(username='string', email='string', password='string', created_at='2000/09/01', updated_at='2000/09/01')
+        handler.create_user(user)
+
         handler = TweetDBHandler(db)
 
         tweet = InputTweet(
@@ -53,6 +59,7 @@ def insert_initial_data_to_db() -> None:
             text="For now, you can only add text and comment. Also login function is not implemented yet.",
             username="Test user",
             profile_image="https://links.papareact.com/gll",
+            created_at="2015-07-01T00:00:00",
         )
         handler.create_tweet(tweet)
 

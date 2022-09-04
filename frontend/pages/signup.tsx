@@ -1,9 +1,53 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router'
 
+import { userSlice } from '../redux/userSlice';
+import { store } from '../redux/store';
+interface UserCreate {
+    username: string;
+    email: string;
+    password: string;
+}
 function signup() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
+
+    const router = useRouter()
+
+    const dispatch = useDispatch();
+    const { login, logout, setStateUsername, setStateEmail } = userSlice.actions;
+    const is_login = store.getState().user.is_login
+    const stateUsername = store.getState().user.username
+
+    console.log(stateUsername, 'logged in:', is_login)
+
+    const createUserAndReturnSessionIfSuccess = (e) => {
+        console.log('createing user')
+
+        e.preventDefault();
+
+        const userCreate: UserCreate = {
+            username: username,
+            email: email,
+            password: password,
+        }
+
+        const res  = fetch('http://localhost:8080/server/users', {
+            body: JSON.stringify(userCreate),
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+              },
+        }).then(response => {
+            dispatch(login())
+            dispatch(setStateEmail(email))
+            dispatch(setStateUsername(username))
+            router.push('/')
+
+        }).catch(() => alert('Email is already taken, please login'))
+    }
 
   return (
     <div>
@@ -39,6 +83,7 @@ function signup() {
                          />
                     <button
                         type="submit"
+                        onClick={createUserAndReturnSessionIfSuccess}
                         disabled={!username || !email || !password}
                         className="w-full text-center py-3 rounded
                          bg-blue-500 text-white

@@ -1,3 +1,4 @@
+from http.client import HTTPException
 import logging
 
 from sqlalchemy.orm import Session
@@ -16,8 +17,8 @@ class UserDBHandler:
     session: Session
 
     def user_exists(self, email: str) -> bool:
-        user_exist = self.session.query(UserOrm).filter(UserOrm.email == email)
-        if user_exist:
+        user_exist = self.session.query(UserOrm).filter(UserOrm.email == email).first()
+        if user_exist is None:
             return True
         else:
             return False
@@ -29,38 +30,47 @@ class UserDBHandler:
                 email=input.email,
                 password=Hash.get_password_hash(input.password),
             )
+
             self.session.add(user)
             self.session.commit()
-            logger.info("User created successfully")
-            logger.info(user.created_at)
+            logger.info(f"User created successfully id:{user.id} email:{user.email}, date:{user.created_at}")
 
-            user_display = UserDisplay(
-                id=user.id,
-                username=user.username,
-                email=user.email,
-            )
+            # user_display = UserDisplay(
+            #     id=user.id,
+            #     username=user.username,
+            #     email=user.email,
+            # )
             user_display = UserDisplay.from_orm(user)
 
             return user_display
 
         except Exception as e:
-            logger.error("Error creating user: %s", e)
+            HTTPException(500, "Error creating user: {}".format(e))
 
     def user_login(self, input: UserLogin) -> UserDisplay:
         try:
-            user: UserOrm = (
-                self.session.query(UserOrm).filter(UserOrm.email == input.email).first()
+            user = (
+                self.session.query(UserOrm)
+                .filter(UserOrm.email == input.email)
+                .first()
             )
+            user_disply = UserDisplay.from_orm(user)
 
-            if Hash.verify_password(user.password, input.password):
+            logger.info(f'user found: {user_disply}')
+
+            if user_disply.id is None:
+                raise HTTPException(500, "Internal Error: could not find uesr")
+
+            logger.info('user found:', user_disply)
+
+            if Hash.verify_password(user_disply.password, input.password):
                 return UserDisplay.from_orm(user)
 
             else:
                 raise ValueError("Invalid password")
 
         except Exception as e:
-            logger.error("could not find user, please sign up: %s", e)
-            return None
+            raise HTTPException(500, "could not find user, please sign up: {}".format(e))
 
     def update_user(self, input: UserUpdate) -> UserDisplay:
         try:

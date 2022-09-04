@@ -1,4 +1,5 @@
 from cmath import isfinite
+from genericpath import exists
 from fastapi import APIRouter, Depends, HTTPException
 
 from typing import List
@@ -17,11 +18,14 @@ router = APIRouter()
 
 @router.post("/users", response_model=UserDisplay)
 def create_user(request: UserCreate, session: Session = Depends(get_session)):
+
     try:
         service = UserService(session)
 
-        if service.user_exists(request.email):
-            return "User already exists, please Login."
+        # exists = service.user_exists(request.email)
+        # if exists:
+        #     raise HTTPException(409, "Conflict: this email is already taken, please login")
+
         try:
             res = service.create_user(request)
             if isinstance(res, UserDisplay):
@@ -31,11 +35,12 @@ def create_user(request: UserCreate, session: Session = Depends(get_session)):
                 HTTPException(404, "Couldn't create user")
         except Exception as e:
             HTTPException(500, "Couldn't create user", e)
+
     except Exception as e:
-        logger.error("could not create service instance")
+        raise HTTPException(500, "Intrnal server error:{}".format(e))
 
 
-@router.get("/user/{email}", response_model=UserDisplay)
+@router.post("/users/login", response_model=UserDisplay)
 def user_login(request: UserLogin, session: Session = Depends(get_session)):
     try:
         service = UserService(session)
