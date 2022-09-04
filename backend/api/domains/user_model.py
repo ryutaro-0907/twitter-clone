@@ -5,8 +5,8 @@ class UserBase(BaseModel):
     username: str
     email: str
 
-    created_at: str
-    updated_at: str
+    created_at: str = None
+    updated_at: str = None
     deleted_at: str = None
 
 
@@ -29,6 +29,8 @@ class UserDisplay(BaseModel):
     id: int
     username: str = None
     email: str = None
+    password: str = None
+
 
     class Config:
         orm_mode = True

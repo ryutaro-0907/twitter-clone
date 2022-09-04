@@ -1,3 +1,4 @@
+from http.client import HTTPException
 import logging
 
 from typing import List
@@ -37,7 +38,6 @@ class TweetDBHandler:
                 self.session.query(Tweet)
                 .filter(Tweet.id == tweet_id)
                 .first()
-                .order_by(Tweet.created_at.desc())
             )
 
             return tweet
@@ -47,12 +47,12 @@ class TweetDBHandler:
 
     def fetch_tweets(self) -> List[Tweet]:
         try:
-            tweets: list(Tweet) = self.session.query(TweetOrm).all()
+            tweets: List[Tweet] = self.session.query(TweetOrm).all()
             tweets.reverse()
             return tweets
+
         except Exception as e:
-            logger.error("could not fetch tweets: %s", e)
-            return None
+            raise HTTPException(500, "could not fetch tweets: %s", e)
 
     def update_tweet(self, info: InputTweet) -> Tweet:
         try:

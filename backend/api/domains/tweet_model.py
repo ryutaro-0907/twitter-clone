@@ -27,6 +27,8 @@ class InputTweet(BaseModel):
     profile_image: str
 
     text: str
+    created_at: str
+
     images: str = None
 
     class Config:

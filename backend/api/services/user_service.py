@@ -10,7 +10,7 @@ class UserService:
         self.handler = UserDBHandler(session)
 
     def user_exists(self, email: str) -> bool:
-        return self.handler.user_exist(email)
+        return self.handler.user_exists(email)
 
     def create_user(self, request: UserCreate) -> UserDisplay:
         logger.info("creating new user")
