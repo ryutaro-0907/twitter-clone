@@ -32,7 +32,7 @@ function Tweet({ tweet } : Props) {
 
       return comments
     } catch (err) {
-      throw new Error('error fetching tweet: ' + err!)
+      throw new Error('error fetching commemt by tweet id: ' + err!)
   }}
 
   const refreshComments = async () => {
