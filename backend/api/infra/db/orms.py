@@ -13,8 +13,8 @@ class TweetOrm(Base):
     images = Column(String(255))
     username = Column(String(255))
     profile_image = Column(String(255))
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    time_created = Column(DateTime(timezone=True), server_default=func.now())
+    time_updated = Column(DateTime(timezone=True), onupdate=func.now())
     deleted_at = Column(DateTime, nullable=True)
 
     comment = relationship("CommentOrm")
@@ -37,7 +37,7 @@ class CommentOrm(Base):
 
 class UserOrm(Base):
     __tablename__ = "users"
-    
+
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String)
     email = Column(String)
