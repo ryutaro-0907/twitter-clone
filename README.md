@@ -2,7 +2,9 @@
 
 <img width="1440" alt="Screen Shot 2022-09-05 at 1 26 23 PM" src="https://user-images.githubusercontent.com/85374614/188360705-434dcd14-eb34-4bb4-a1eb-4e3b98ad8150.png">
 
-<img width="1440" alt="Screen Shot 2022-09-05 at 1 29 49 PM" src="https://user-images.githubusercontent.com/85374614/188360728-b1047955-5321-4c70-b531-5b05a3a403f2.png">
+<img width="1440" alt="Screen Shot 2022-09-05 at 1 30 56 PM" src="https://user-images.githubusercontent.com/85374614/188360816-a7e8e778-baad-4973-8b4e-0fb5b21c317e.png">
+
+
 
 
 ## Tecnologies
