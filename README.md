@@ -1,5 +1,10 @@
 # Twitter Clone with Python, Next.js and Nginx.
 
+<img width="1440" alt="Screen Shot 2022-09-05 at 1 26 23 PM" src="https://user-images.githubusercontent.com/85374614/188360705-434dcd14-eb34-4bb4-a1eb-4e3b98ad8150.png">
+
+<img width="1440" alt="Screen Shot 2022-09-05 at 1 29 49 PM" src="https://user-images.githubusercontent.com/85374614/188360728-b1047955-5321-4c70-b531-5b05a3a403f2.png">
+
+
 ## Tecnologies
 - FastApi
 - Next.js
