@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-
+import { store } from '../redux/store';
 interface Props {
     tweet: Tweet
 }
@@ -23,7 +23,8 @@ function Tweet({ tweet } : Props) {
   const [input, setInput] = useState<string>('');
 
 //   const { data: session } = useSession();
-  const session = true
+  const session = store.getState().user.is_login
+
   const fetchCommentsById = async (tweet_id: number) => {
     try {
       const data = await fetch(`http://localhost:8080/server/comments?tweet_id=${tweet_id}`)

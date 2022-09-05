@@ -19,6 +19,8 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.is_login = false;
+      state.email = '';
+      state.username = '';
     },
   },
 });

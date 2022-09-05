@@ -6,21 +6,24 @@ import {
     PhotographIcon,
     SearchCircleIcon,
 } from "@heroicons/react/outline";
-import { useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
+
 import { Tweet, TweetBody } from '../typings';
 import { fetchTweets } from '../utils/tweet_handler';
-import toast from 'react-hot-toast';
+import { store } from '../redux/store';
 
 
 interface Props {
     setTweets: Dispatch<SetStateAction<Tweet[]>>
 }
+
 function TweetBox({ setTweets }: Props) {
     const [input, setInput] = useState<string>("");
     const [image, setImage] = useState<string>("");
 
     // const { data: session } = useSession();
-    const session = true
+    const session = store.getState().user.is_login
+    const stateUsername = store.getState().user.username
 
     const [imageUrlBoxIsOpen, setImageUrlBoxIsOpen] = useState<boolean>(false)
     const imageInputRef = useRef<HTMLInputElement>(null);
@@ -39,7 +42,7 @@ function TweetBox({ setTweets }: Props) {
         const tweetInfo: TweetBody = {
             user_id: 1,
             text: input,
-            username: 'test user (login is not implemented yet.)',
+            username: stateUsername,
             profile_image: 'https://links.papareact.com/gll',
             // username: session?.user?.name || 'Unknown user',
             // profileImage: session?.user?.image || 'https://links.papareact.com/gll',
