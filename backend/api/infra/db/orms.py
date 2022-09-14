@@ -1,8 +1,7 @@
-import profile
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from api.infra.db.base import Base
+from ...infra.db.base import Base
 
 
 class TweetOrm(Base):

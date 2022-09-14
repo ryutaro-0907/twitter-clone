@@ -6,8 +6,8 @@ from sqlalchemy.orm import Session
 
 from dataclasses import dataclass
 
-from api.domains.tweet_model import Tweet, InputTweet
-from api.infra.db.orms import TweetOrm
+from ...domains.tweet_model import Tweet, InputTweet
+from ...infra.db.orms import TweetOrm
 
 logger = logging.getLogger(__name__)
 

@@ -5,9 +5,9 @@ from sqlalchemy.orm import Session
 
 from dataclasses import dataclass
 
-from api.domains.user_model import UserDisplay, UserCreate, UserUpdate, UserLogin
-from api.infra.db.orms import UserOrm
-from api.infra.utils.pass_hassing import Hash
+from ...domains.user_model import UserDisplay, UserCreate, UserUpdate, UserLogin
+from ...infra.db.orms import UserOrm
+from ...infra.utils.pass_hassing import Hash
 
 logger = logging.getLogger(__name__)
 

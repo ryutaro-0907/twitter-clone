@@ -9,13 +9,13 @@ from sqlalchemy.orm import sessionmaker
 import contextlib
 from sqlalchemy import MetaData
 
-from api.domains.tweet_model import InputTweet
-from api.domains.comment_model import InputComment
-from api.domains.user_model import UserCreate
-from api.infra.db.base import Base
-from api.infra.db.user_db import UserDBHandler
-from api.infra.db.tweet_db import TweetDBHandler
-from api.infra.db.comment_db import CommentDBHandler
+from .domains.tweet_model import InputTweet
+from .domains.comment_model import InputComment
+from .domains.user_model import UserCreate
+from .infra.db.base import Base
+from .infra.db.user_db import UserDBHandler
+from .infra.db.tweet_db import TweetDBHandler
+from .infra.db.comment_db import CommentDBHandler
 
 
 logging.basicConfig(level=logging.INFO)

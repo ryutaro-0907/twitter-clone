@@ -3,9 +3,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 from sqlalchemy.orm import Session
 
-from api.domains.comment_model import Comment, InputComment
-from api.infra.db.database import get_session
-from api.services.comment_service import CommentService
+from ..domains.comment_model import Comment, InputComment
+from ..infra.db.database import get_session
+from ..services.comment_service import CommentService
 
 import logging
 

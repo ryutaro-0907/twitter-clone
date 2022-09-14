@@ -1,10 +1,13 @@
 """conftest."""
-import uuid
+import sys
 
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, drop_database
+
+from ..api.infra.db.base import Base
+from ..api.main import app
 
 
 @pytest.fixture(scope="function", name="test_session_local")
@@ -21,7 +24,7 @@ def fixture_test_session_local():
     ), "Test database already exists. Aborting tests."
 
     # Create test database and tables
-    entities.Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
     session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     # Run the tests

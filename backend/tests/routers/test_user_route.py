@@ -5,14 +5,14 @@ from ...api.domains.user_model import UserCreate, UserDisplay
 app = app
 client = TestClient(app)
 
-username = "test user"
-email = "user@example.com"
-password = "password"
-created_at = "2020-01-01"
-updated_at = "2020-01-01"
-
 
 def test_user_login():
+    username = "test user"
+    email = "user@example.com"
+    password = "password"
+    created_at = "2020-01-01"
+    updated_at = "2020-01-01"
+
     user = UserCreate(
         username=username,
         email=email,

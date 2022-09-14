@@ -1,4 +1,4 @@
-from backend.api.infra.utils.pass_hassing import Hash
+from ....api.infra.utils.pass_hassing import Hash
 
 pswd = "testingisawosome"
 new_pswd = "testingisboroing"

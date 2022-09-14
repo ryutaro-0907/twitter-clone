@@ -1,7 +1,7 @@
 from asyncio.log import logger
 from typing import List
-from api.domains.tweet_model import Tweet, InputTweet
-from api.infra.db.tweet_db import TweetDBHandler
+from ..domains.tweet_model import Tweet, InputTweet
+from ..infra.db.tweet_db import TweetDBHandler
 from sqlalchemy.orm import Session
 
 
