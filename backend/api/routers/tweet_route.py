@@ -3,9 +3,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 from sqlalchemy.orm import Session
 
-from api.domains.tweet_model import Tweet, InputTweet
-from api.infra.db.database import get_session
-from api.services.tweet_service import TweetService
+from ..domains.tweet_model import Tweet, InputTweet
+from ..infra.db.database import get_session
+from ..services.tweet_service import TweetService
 
 import logging
 

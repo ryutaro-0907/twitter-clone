@@ -5,9 +5,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 from sqlalchemy.orm import Session
 
-from api.domains.user_model import UserCreate, UserLogin, UserUpdate, UserDisplay
-from api.infra.db.database import get_session
-from api.services.user_service import UserService
+from ..domains.user_model import UserCreate, UserLogin, UserUpdate, UserDisplay
+from ..infra.db.database import get_session
+from ..services.user_service import UserService
 
 import logging
 

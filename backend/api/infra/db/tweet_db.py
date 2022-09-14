@@ -6,8 +6,8 @@ from sqlalchemy.orm import Session
 
 from dataclasses import dataclass
 
-from api.domains.tweet_model import Tweet, InputTweet
-from api.infra.db.orms import TweetOrm
+from ...domains.tweet_model import Tweet, InputTweet
+from ...infra.db.orms import TweetOrm
 
 logger = logging.getLogger(__name__)
 
@@ -35,9 +35,7 @@ class TweetDBHandler:
     def fetch_tweet_by_id(self, tweet_id: int) -> Tweet:
         try:
             tweet: Tweet = (
-                self.session.query(Tweet)
-                .filter(Tweet.id == tweet_id)
-                .first()
+                self.session.query(Tweet).filter(Tweet.id == tweet_id).first()
             )
 
             return tweet

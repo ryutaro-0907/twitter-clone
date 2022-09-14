@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from dataclasses import dataclass
 
-from api.domains.comment_model import Comment, InputComment
-from api.infra.db.orms import CommentOrm
+from ...domains.comment_model import Comment, InputComment
+from ...infra.db.orms import CommentOrm
 
 logger = logging.getLogger(__name__)
 

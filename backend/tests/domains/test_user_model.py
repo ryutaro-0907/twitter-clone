@@ -1,4 +1,4 @@
-from backend.api.domains.user_model import UserCreate
+from ...api.domains.user_model import UserCreate
 
 
 username = "test user"

@@ -5,9 +5,9 @@ from sqlalchemy.orm import Session
 
 from dataclasses import dataclass
 
-from api.domains.user_model import UserDisplay, UserCreate, UserUpdate, UserLogin
-from api.infra.db.orms import UserOrm
-from api.infra.utils.pass_hassing import Hash
+from ...domains.user_model import UserDisplay, UserCreate, UserUpdate, UserLogin
+from ...infra.db.orms import UserOrm
+from ...infra.utils.pass_hassing import Hash
 
 logger = logging.getLogger(__name__)
 
@@ -33,13 +33,10 @@ class UserDBHandler:
 
             self.session.add(user)
             self.session.commit()
-            logger.info(f"User created successfully id:{user.id} email:{user.email}, date:{user.created_at}")
+            logger.info(
+                f"User created successfully id:{user.id} email:{user.email}, date:{user.created_at}"
+            )
 
-            # user_display = UserDisplay(
-            #     id=user.id,
-            #     username=user.username,
-            #     email=user.email,
-            # )
             user_display = UserDisplay.from_orm(user)
 
             return user_display
@@ -50,27 +47,29 @@ class UserDBHandler:
     def user_login(self, input: UserLogin) -> UserDisplay:
         try:
             user = (
-                self.session.query(UserOrm)
-                .filter(UserOrm.email == input.email)
-                .first()
+                self.session.query(UserOrm).filter(UserOrm.email == input.email).first()
             )
-            user_disply = UserDisplay.from_orm(user)
 
-            logger.info(f'user found: {user_disply}')
+            assert (
+                type(user.id) == int
+            ), "type of user id must be int recived {}".format(user.id)
+            user_disply = UserDisplay.from_orm(user)
 
             if user_disply.id is None:
                 raise HTTPException(500, "Internal Error: could not find uesr")
 
-            logger.info('user found:', user_disply)
+            logger.info(f"user found: id:{user_disply.id}, username:{user.username}")
 
             if Hash.verify_password(user_disply.password, input.password):
-                return UserDisplay.from_orm(user)
+                return user_disply
 
             else:
                 raise ValueError("Invalid password")
 
         except Exception as e:
-            raise HTTPException(500, "could not find user, please sign up: {}".format(e))
+            raise HTTPException(
+                500, "could not find user, please sign up: {}".format(e)
+            )
 
     def update_user(self, input: UserUpdate) -> UserDisplay:
         try:

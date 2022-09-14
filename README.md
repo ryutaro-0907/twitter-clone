@@ -8,6 +8,7 @@
 
 
 ## Tecnologies
+
 - FastApi
 - Next.js
 - Typescript
@@ -19,7 +20,8 @@
 ## Getting Started
 
 ### Install direnv and set up .envrc file.
-``` .envrc
+
+```.envrc
     <!-- For next auth  -->
     export GOOGLE_CLIENT_ID=
     export GOOGLE_CLIENT_SECRET=
@@ -44,33 +46,38 @@
     # export BASE_URL=http://nginx:8080/api # for frontend to call backend api
 ```
 
-``` bash
+```bash
 sh development.sh #to build docker environment.
 ```
 
 Then run
-``` bash
+
+```bash
  docker-compose up
 ```
 
 ## Authors
 
 ryutaro.furutani@gmail.com
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-
 ## NOTE for development.
+
 ### Frontend
+
 if data is not fetching from backend, please reload backend code.
 
-``` i.e.
+```i.e.
 Server Error
 Error: Error serializing `.tweets` returned from `getServerSideProps` in "/".
 Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
 ```
+
 ### Backend
+
 If backend not conncting to database, please wait and reload backend.
 
 ### Nginx
@@ -78,12 +85,15 @@ If backend not conncting to database, please wait and reload backend.
 ### Database
 
 ### Environment variables
+
 =======
+
 # twitter-colne
 
 # Set up
 
 # Install direnv and crate .envrc file in your root directory as follows
+
 ```
 export GOOGLE_CLIENT_ID=
 export GOOGLE_CLIENT_SECRET=
@@ -99,11 +109,20 @@ export SANITY_API_TOKEN=
 ```
 
 ## Note:
+
 You need to have an access to Sanity and google API to use some backend processes.
 
 # After you set up
+
 ## Run for dev
+
 ```
 npm install
 npm run dev
+```
+
+## Backend test
+
+```docker
+docker exec -it backend sh -c "poetry run pytest"
 ```
