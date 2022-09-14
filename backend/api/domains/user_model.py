@@ -31,7 +31,6 @@ class UserDisplay(BaseModel):
     email: str = None
     password: str = None
 
-
     class Config:
         orm_mode = True
 

@@ -49,7 +49,13 @@ Base.metadata.create_all(bind=engine)
 def insert_initial_data_to_db() -> None:
     with SessionLocal() as db:
         handler = UserDBHandler(db)
-        user = UserCreate(username='string', email='string', password='string', created_at='2000/09/01', updated_at='2000/09/01')
+        user = UserCreate(
+            username="string",
+            email="string",
+            password="string",
+            created_at="2000/09/01",
+            updated_at="2000/09/01",
+        )
         handler.create_user(user)
 
         handler = TweetDBHandler(db)

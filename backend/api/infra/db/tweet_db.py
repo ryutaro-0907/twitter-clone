@@ -35,9 +35,7 @@ class TweetDBHandler:
     def fetch_tweet_by_id(self, tweet_id: int) -> Tweet:
         try:
             tweet: Tweet = (
-                self.session.query(Tweet)
-                .filter(Tweet.id == tweet_id)
-                .first()
+                self.session.query(Tweet).filter(Tweet.id == tweet_id).first()
             )
 
             return tweet
