@@ -18,7 +18,6 @@
 
 ### Install direnv and set up .envrc file.
 
-
 ```.envrc
 # For google auth api
 export GOOGLE_CLIENT_ID=
@@ -43,8 +42,8 @@ export BASE_URL=http://nginx:8080/api # for frontend to call backend api
 
 
 # aws s3
-export AWS_ACCESS_KEY_ID=AKIAT2ADK2GDT3IX2N2H
-export AWS_SECRET_ACCESS_KEY=AKIAT2ADK2GDT3IX2N2H
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
 export AWS_S3_BUCKET_NAME=pythons3tutorialbucket2022
 export AWS_REGION_NAME=us-east-1
 
