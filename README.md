@@ -115,14 +115,6 @@ export SANITY_API_TOKEN=
 
 You need to have an access to Sanity and google API to use some backend processes.
 
-# After you set up
-
-## Run for dev
-
-```
-npm install
-npm run dev
-```
 
 ## Backend test
 
