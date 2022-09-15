@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form
 
 from typing import List
 from sqlalchemy.orm import Session
@@ -14,13 +14,23 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/tweets", response_model=Tweet)
-def create_tweet(request: InputTweet, session: Session = Depends(get_session)):
+# @router.post("/tweets", response_model=Tweet)
+# async def create_tweet(request: InputTweet, files: List[UploadFile] = File(...) or None,
+#  session: Session = Depends(get_session)):
+@router.post("/tweets/create", response_model=Tweet)
+async def create_tweet(request: InputTweet = Form(...),
+                  files: List[UploadFile] = File(None),
+                  session: Session = Depends(get_session),
+                ) -> Tweet:
+
     try:
         service = TweetService(session)
 
         try:
-            res = service.create_tweet(request)
+            logger.info(
+                f'request recived {request} with attachments {files}'
+            )
+            res = service.create_tweet(request=request, files=files)
             if type(res) == Tweet:
                 logger.info("Tweet created successfully")
                 return res

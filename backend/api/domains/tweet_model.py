@@ -1,6 +1,8 @@
 from datetime import datetime
 from pydantic import BaseModel
 
+import json
+
 
 class Tweet(BaseModel):
     id: int
@@ -10,12 +12,11 @@ class Tweet(BaseModel):
 
     text: str
 
-    images: str = None
     profile_image: str = None
 
-    created_at: str = None
-    updated_at: str = None
-    deleted_at: str = None
+    created_at: datetime
+    updated_at: datetime
+    deleted_at: datetime = None
 
     blocked: bool = False
 
@@ -28,8 +29,17 @@ class InputTweet(BaseModel):
     username: str
 
     text: str
-    images: str = None
     profile_image: str = None
 
     class Config:
         orm_mode = True
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate_to_json
+
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value

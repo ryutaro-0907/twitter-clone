@@ -67,7 +67,8 @@ def insert_initial_data_to_db() -> None:
             profile_image="https://links.papareact.com/gll",
             created_at="2015-07-01T00:00:00",
         )
-        handler.create_tweet(tweet)
+        res_tweet = handler.create_tweet(tweet)
+        logger.info(f'tweet created{res_tweet}')
 
         handler = CommentDBHandler(db)
         comment = InputComment(

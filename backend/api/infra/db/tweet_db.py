@@ -2,13 +2,12 @@ from http.client import HTTPException
 import logging
 
 from typing import List
+from fastapi import UploadFile
 from sqlalchemy.orm import Session
-
 from dataclasses import dataclass
 
 from ...domains.tweet_model import Tweet, InputTweet
-from ...infra.db.orms import TweetOrm
-
+from ...infra.db.orms import TweetOrm, TweetImageOrm
 logger = logging.getLogger(__name__)
 
 
@@ -16,19 +15,48 @@ logger = logging.getLogger(__name__)
 class TweetDBHandler:
     session: Session
 
-    def create_tweet(self, input: InputTweet) -> Tweet:
+    def create_tweet(self, input: InputTweet, files:list[UploadFile]=None) -> Tweet:
         try:
+            logger.info(f'creating TweetOrm with: {input}')
+
             tweet = TweetOrm(
                 text=input.text,
                 user_id=input.user_id,
-                images=input.images,
                 username=input.username,
                 profile_image=input.profile_image,
             )
+            logger.info('TweetOrm created')
+
+            # if files is not None:
+            #     try:
+            #         for file in files:
+            #             file_handler = S3FileHandler()
+            #             s3_dir = '/users/' + str(input.user_id) + '/' + str(tweet.id) + '/'
+            #             s3_file = S3File(
+            #                 file=file,
+            #                 key=s3_dir + file.filename
+            #             )
+            #             object_path = file_handler.upload_file_to_s3(s3_file, s3_dir)
+
+            #             tweet_image = TweetImageOrm(
+            #                 tweet_id = tweet.id,
+            #                 file_name = file.filename,
+            #                 object_path = object_path,
+            #             )
+
+                #         self.session.add(tweet_image)
+                #         # FIXME
+                #         # Research if it's better to commit at once in the end.
+                #         self.session.commit()
+                # except Exception as e:
+                #     raise Exception(f'Error while uploading files to s3 : {e}')
+
             self.session.add(tweet)
             self.session.commit()
             logger.info("Tweet created successfully")
+
             return Tweet.from_orm(tweet)
+
         except Exception as e:
             logger.error("Error creating tweet: %s", e)
 

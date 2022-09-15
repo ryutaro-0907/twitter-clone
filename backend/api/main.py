@@ -4,7 +4,7 @@ from logging.config import dictConfig
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import tweet_route, comment_route, user_route
+from .routers import tweet_route, comment_route, user_route, presigned_url_route
 from .init_db import insert_initial_data_to_db, clear_db
 from .settings import LogConfig
 
@@ -49,6 +49,7 @@ def hello_world():
 app.include_router(user_route.router, prefix="/server")
 app.include_router(tweet_route.router, prefix="/server")
 app.include_router(comment_route.router, prefix="/server")
+app.include_router(presigned_url_route.router, prefix="/server")
 
 
 class APPTaker:
