@@ -5,7 +5,7 @@
 /.history
 
 # env
-.envrc
+*.envrc
 
 # python
 .venv

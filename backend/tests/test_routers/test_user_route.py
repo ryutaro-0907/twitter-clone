@@ -6,7 +6,7 @@ from backend.api.routers.user_route import user_login
 from ...api.main import app
 from ...api.domains.user_model import UserCreate, UserDisplay, UserLogin
 from ...api.infra.utils.pass_hassing import Hash
-from ...tests.conftest import set_up_tear_down
+from ..conftest import set_up_tear_down
 
 
 app = app

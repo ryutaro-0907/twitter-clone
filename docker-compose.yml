@@ -12,12 +12,15 @@ services:
     ports:
       - 8000:8000
     environment:
-      # - APP_SETTINGS=project.config.DevelopmentConfig
       - DB_ENDPOINT=${DB_ENDPOINT}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
-      # - DATABASE_TEST_URL=postgres://postgres:postgres@development-db:5432/test_db
-      # - SECRET_KEY=ZQbn05PDeA7v11
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+      - AWS_REGION_NAME=${AWS_REGION_NAME}
+
+
     depends_on:
       - development-db
 
@@ -64,8 +67,6 @@ services:
       - NODE_ENV=development
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-      - NEXTAUTH_URL=${NEXTAUTH_URL}
-      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
     depends_on:
       - backend

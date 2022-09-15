@@ -4,9 +4,6 @@
 
 <img width="1440" alt="Screen Shot 2022-09-05 at 1 30 56 PM" src="https://user-images.githubusercontent.com/85374614/188360816-a7e8e778-baad-4973-8b4e-0fb5b21c317e.png">
 
-
-
-
 ## Tecnologies
 
 - FastApi
@@ -22,28 +19,34 @@
 ### Install direnv and set up .envrc file.
 
 ```.envrc
-    <!-- For next auth  -->
-    export GOOGLE_CLIENT_ID=
-    export GOOGLE_CLIENT_SECRET=
+# For google auth api
+export GOOGLE_CLIENT_ID=
+export GOOGLE_CLIENT_SECRET=
 
-    export NEXTAUTH_URL=http://0.0.0.0:3000/
-    export NEXTAUTH_SECRET=codeforfun
+export NEXTAUTH_URL=http://0.0.0.0:3000/
+export NEXTAUTH_SECRET=codeforfun
 
-    export NEXT_PUBLIC_BASE_URL=http://0.0.0.0:3000/
+export NEXT_PUBLIC_BASE_URL=http://0.0.0.0:3000/
 
-    <!-- For backend logging-->
-    export LOGFILE_PATH=${LOCAL_DATA_DIR}/logs/app.log
+export LOGFILE_PATH=${LOCAL_DATA_DIR}/logs/app.log
 
-    <!-- For db -->
-    export LOCAL_DATA_DIR=./data
+export LOCAL_DATA_DIR=./data
 
-    export DB_TYPE=postgres
-    export DB_USER=user  # to access the postgres database from backend
-    export DB_PASS=pass  # to access the postgres database from backend
-    export DB_ENDPOINT=192.168.0.16:5432 # to access the postgres database from backend
+# DB
+export DB_TYPE=postgres
+export DB_USER=user  # to access the postgres database from backend
+export DB_PASS=pass  # to access the postgres database from backend
+export DB_ENDPOINT=192.168.0.25:5432 # to access the postgres database from backend
 
-    <!-- For frontend -->
-    # export BASE_URL=http://nginx:8080/api # for frontend to call backend api
+export BASE_URL=http://nginx:8080/api # for frontend to call backend api
+
+
+# aws s3
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_S3_BUCKET_NAME=pythons3tutorialbucket2022
+export AWS_REGION_NAME=us-east-1
+
 ```
 
 ```bash

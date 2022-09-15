@@ -4,19 +4,18 @@ from pydantic import BaseModel
 
 class Comment(BaseModel):
     id: int
-    created_at: datetime or str
 
     tweet_id: int
     user_id: int
     username: str
 
     comment: str
-    images: str = None
+
+    created_at: datetime
+    updated_at: datetime 
+    deleted_at: datetime = None
 
     blocked: bool = False
-
-    updated_at: str = None
-    deleted_at: str = None
 
     class Config:
         orm_mode = True
