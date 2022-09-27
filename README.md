@@ -2,11 +2,19 @@
 
 
 
+## Login Page
+
+
 <img width="1440" alt="Screen Shot 2022-09-05 at 1 26 23 PM" src="https://user-images.githubusercontent.com/85374614/188360705-434dcd14-eb34-4bb4-a1eb-4e3b98ad8150.png">
+
+
+## Home page 
+
 
 <img width="1440" alt="Screen Shot 2022-09-05 at 1 30 56 PM" src="https://user-images.githubusercontent.com/85374614/188360816-a7e8e778-baad-4973-8b4e-0fb5b21c317e.png">
 
-## Tecnologies
+
+# Tecnologies
 
 - FastApi
 - Next.js
@@ -16,22 +24,20 @@
 - Docker
 - Nginx
 
-## Getting Started
 
-### Install direnv and set up .envrc file.
+# Getting Started
+
+
+## Install direnv and set up .envrc file.
+
 
 ```.envrc
 # For google auth api
 export GOOGLE_CLIENT_ID=
 export GOOGLE_CLIENT_SECRET=
 
-export NEXTAUTH_URL=http://0.0.0.0:3000/
-export NEXTAUTH_SECRET=codeforfun
-
-export NEXT_PUBLIC_BASE_URL=http://0.0.0.0:3000/
-
+# For backend log 
 export LOGFILE_PATH=${LOCAL_DATA_DIR}/logs/app.log
-
 export LOCAL_DATA_DIR=./data
 
 # DB
@@ -40,8 +46,8 @@ export DB_USER=user  # to access the postgres database from backend
 export DB_PASS=pass  # to access the postgres database from backend
 export DB_ENDPOINT=192.168.0.25:5432 # to access the postgres database from backend
 
-export BASE_URL=http://nginx:8080/api # for frontend to call backend api
-
+# for frontend to call backend api
+export BASE_URL=http://nginx:8080/api 
 
 # aws s3
 export AWS_ACCESS_KEY_ID=
@@ -51,27 +57,44 @@ export AWS_REGION_NAME=us-east-1
 
 ```
 
+## Run development.sh file to set up docker enviroment.
+
+
 ```bash
 sh development.sh #to build docker environment.
 ```
 
-Then run
+
+## Then run
+
 
 ```bash
  docker-compose up
 ```
 
+
 ## Authors
 
-ryutaro.furutani@gmail.com
+
+[Email] ryutaro.furutani@gmail.com
+[Twitter] @ryulovepython
+[Blog] https://ryutaro.hashnode.dev/
+
 
 ## License
 
+
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## NOTE for development.
 
-### Frontend
+# NOTE for development.
+
+
+## Trabule Shooting
+
+
+### Frontend Trabule Shooting
+
 
 if data is not fetching from backend, please reload backend code.
 
@@ -81,45 +104,45 @@ Error: Error serializing `.tweets` returned from `getServerSideProps` in "/".
 Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
 ```
 
-### Backend
+
+### Backend Trabule Shooting
+
 
 If backend not conncting to database, please wait and reload backend.
 
-### Nginx
-
-### Database
-
-### Environment variables
-
-=======
-
-# twitter-colne
-
-# Set up
-
-# Install direnv and crate .envrc file in your root directory as follows
-
-```
-export GOOGLE_CLIENT_ID=
-export GOOGLE_CLIENT_SECRET=
-
-export NEXTAUTH_URL=http://localhost:3000/
-<!-- any secret is fine. -->
-export NEXTAUTH_SECRET=codeforfun
-
-export NEXT_PUBLIC_SANITY_DATASET=production
-export NEXT_PUBLIC_SANITY_PROJECT_ID=
-export NEXT_PUBLIC_BASE_URL=http://localhost:3000/
-export SANITY_API_TOKEN=
-```
-
-## Note:
-
-You need to have an access to Sanity and google API to use some backend processes.
 
 
-## Backend test
+### Nginx Trabule Shooting
 
-```docker
+
+### Database Trabule Shooting
+
+
+### Environment variables Trabule Shooting
+
+
+# Important tips For Development
+
+
+## Backend test 
+
+
+```bash
 docker exec -it backend sh -c "poetry run pytest"
+```
+
+
+## Code Formatting For Backend (PEP8)
+
+
+```bash
+poetry run autopep8 .
+```
+
+
+## Sort imports in Backend
+
+
+```bash
+isort --atomic .
 ```
