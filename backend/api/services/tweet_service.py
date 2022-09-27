@@ -1,12 +1,11 @@
 from asyncio.log import logger
 from typing import List
 
-from ..domains.tweet_model import Tweet, InputTweet
-from ..infra.db.tweet_db import TweetDBHandler
-
-
 from fastapi import UploadFile
 from sqlalchemy.orm import Session
+
+from ..domains.tweet_model import InputTweet, Tweet
+from ..infra.db.tweet_db import TweetDBHandler
 
 
 class TweetService:
@@ -14,7 +13,7 @@ class TweetService:
         self.session = session
         self.handler = TweetDBHandler(self.session)
 
-    def create_tweet(self, request: InputTweet, files: List[UploadFile]=None) -> Tweet or None:
+    def create_tweet(self, request: InputTweet, files: List[UploadFile] = None) -> Tweet or None:
         logger.info("creating new Tweet")
         res = self.handler.create_tweet(request, files)
         logger.info("created new Tweet")

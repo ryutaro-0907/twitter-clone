@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 
+
 class Fields(BaseModel):
     key: str
-    AWSAccessKeyId:str
+    AWSAccessKeyId: str
     policy: str
     signature: str
 

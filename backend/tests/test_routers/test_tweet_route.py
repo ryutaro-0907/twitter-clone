@@ -1,13 +1,12 @@
-from fastapi.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
+from fastapi.testclient import TestClient
 
 from backend.api.routers.tweet_route import create_tweet
 
-from ...api.main import app
 from ...api.domains.tweet_model import InputTweet, Tweet
 from ...api.infra.utils.pass_hassing import Hash
+from ...api.main import app
 from ..conftest import set_up_tear_down
-
 
 app = app
 client = TestClient(app)
@@ -17,8 +16,7 @@ client = TestClient(app)
 def test_user_create(mocker):
     username = "test user"
     user_id = 1
-    text='test text'
-
+    text = 'test text'
 
     tweet = InputTweet(
         user_id=user_id,
@@ -34,4 +32,3 @@ def test_user_create(mocker):
 
     assert content["username"] == tweet.username
     assert content["text"] == tweet.text
-

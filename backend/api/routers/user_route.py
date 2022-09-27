@@ -1,16 +1,14 @@
+import logging
 from cmath import isfinite
-from genericpath import exists
-from fastapi import APIRouter, Depends, HTTPException
-
 from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
+from genericpath import exists
 from sqlalchemy.orm import Session
 
-from ..domains.user_model import UserCreate, UserLogin, UserUpdate, UserDisplay
+from ..domains.user_model import UserCreate, UserDisplay, UserLogin, UserUpdate
 from ..infra.db.database import get_session
 from ..services.user_service import UserService
-
-import logging
-
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

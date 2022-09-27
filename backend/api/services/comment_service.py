@@ -2,10 +2,10 @@ from asyncio.log import logger
 from sqlite3 import InternalError
 from typing import List
 
+from sqlalchemy.orm import Session
+
 from ..domains.comment_model import Comment, InputComment
 from ..infra.db.comment_db import CommentDBHandler
-
-from sqlalchemy.orm import Session
 
 
 class CommentService:

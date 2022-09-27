@@ -1,20 +1,18 @@
 # Refs
 # 1. https://towardsdatascience.com/how-to-upload-and-download-files-from-aws-s3-using-python-2022-4c9b787b15f2
-import os
 import logging
+import os
 import random
-
-from pydantic import BaseModel
 
 import boto3
 from botocore.client import Config
 from botocore.exceptions import ClientError
 from fastapi import UploadFile
-
-
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 boto3.set_stream_logger('boto3.resources', logging.INFO)
+
 
 class S3File(BaseModel):
 
@@ -31,7 +29,6 @@ class AWSCredentials(BaseModel):
     region_name: str = 'us-east-1'
 
 
-
 class AwsBucketApi(BaseModel):
 
     S3_ACCESS_KEY_ID: str = os.environ.get('AWS_ACCESS_KEY_ID', None)
@@ -39,10 +36,8 @@ class AwsBucketApi(BaseModel):
     region_name: str = os.environ.get('AWS_REGION_NAME', None)
     bucket_name: str = os.environ.get("AWS_S3_BUCKET_NAME", None),
 
-
-
-    def create_presigned_post(self, object_name:str,
-                            fields=None, conditions=None, expiration=3600):
+    def create_presigned_post(self, object_name: str,
+                              fields=None, conditions=None, expiration=3600):
         """Generate a presigned URL S3 POST request to upload a file
 
         :param bucket_name: string
@@ -70,10 +65,10 @@ class AwsBucketApi(BaseModel):
             bucket_name = self.bucket_name[0]
             logger.info(bucket_name)
             response = s3_client.generate_presigned_post(
-                    Bucket = bucket_name,
-                    Key = object_name,
-                    ExpiresIn = 10
-                )
+                Bucket=bucket_name,
+                Key=object_name,
+                ExpiresIn=10
+            )
 
         except ClientError as e:
             logger.error(e)
@@ -83,12 +78,11 @@ class AwsBucketApi(BaseModel):
         return response
 
 
-
 if __name__ == "__main__":
-    import requests    # To install: pip install requests
+    import requests  # To install: pip install requests
 
     # Generate a presigned S3 POST URL
-    object_path= 'backend/api/infra/aws/test.txt'
+    object_path = 'backend/api/infra/aws/test.txt'
     s3_handler = AwsBucketApi()
 
     response = s3_handler.create_presigned_post(object_path)

@@ -6,15 +6,12 @@ from fastapi import APIRouter, HTTPException
 from ..domains.presigned_url_model import AwsPreSignedUrlResponse
 from ..infra.aws.s3_file_uploader import AwsBucketApi
 
-
-
-
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
 @router.get("/aws-s3-pre-signed-url", response_model=AwsPreSignedUrlResponse)
-def gen_pre_signed_url(file_name:str):
+def gen_pre_signed_url(file_name: str):
     try:
         aws_api = AwsBucketApi()
 

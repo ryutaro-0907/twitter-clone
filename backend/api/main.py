@@ -4,8 +4,9 @@ from logging.config import dictConfig
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import tweet_route, comment_route, user_route, presigned_url_route
-from .init_db import insert_initial_data_to_db, clear_db
+from .init_db import clear_db, insert_initial_data_to_db
+from .routers import (comment_route, presigned_url_route, tweet_route,
+                      user_route)
 from .settings import LogConfig
 
 dictConfig(LogConfig().dict())

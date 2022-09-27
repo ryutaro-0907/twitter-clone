@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from sqlalchemy import TIMESTAMP, Column, Integer, String, DateTime, ForeignKey, Boolean
-from sqlalchemy.sql import func
+from sqlalchemy import (TIMESTAMP, Boolean, Column, DateTime, ForeignKey,
+                        Integer, String)
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 from ...infra.db.base import Base
 
@@ -27,7 +28,6 @@ class TweetOrm(Base):
     comment = relationship("CommentOrm")
 
     images = relationship("TweetImageOrm", backref="tweets")
-
 
 
 class TweetImageOrm(Base):

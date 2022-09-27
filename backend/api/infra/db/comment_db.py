@@ -1,9 +1,8 @@
 import logging
-
-from typing import List
-from sqlalchemy.orm import Session
-
 from dataclasses import dataclass
+from typing import List
+
+from sqlalchemy.orm import Session
 
 from ...domains.comment_model import Comment, InputComment
 from ...infra.db.orms import CommentOrm

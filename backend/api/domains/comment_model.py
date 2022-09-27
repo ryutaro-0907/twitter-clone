@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from pydantic import BaseModel
 
 
@@ -12,7 +13,7 @@ class Comment(BaseModel):
     comment: str
 
     created_at: datetime
-    updated_at: datetime 
+    updated_at: datetime
     deleted_at: datetime = None
 
     blocked: bool = False
