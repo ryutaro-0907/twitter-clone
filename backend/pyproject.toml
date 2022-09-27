@@ -20,6 +20,7 @@ requests = "^2.28.1"
 bcrypt = "^4.0.0"
 python-multipart = "^0.0.5"
 boto3 = "^1.24.72"
+isort = "^5.10.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"

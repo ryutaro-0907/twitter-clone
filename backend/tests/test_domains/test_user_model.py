@@ -1,6 +1,5 @@
 from ...api.domains.user_model import UserCreate
 
-
 username = "test user"
 email = "user@example.com"
 password = "password"

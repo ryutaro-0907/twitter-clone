@@ -1,7 +1,7 @@
-from datetime import datetime
-from pydantic import BaseModel
-
 import json
+from datetime import datetime
+
+from pydantic import BaseModel
 
 
 class Tweet(BaseModel):

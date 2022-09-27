@@ -1,9 +1,9 @@
 from asyncio.log import logger
 
-from ..domains.user_model import UserCreate, UserLogin, UserUpdate, UserDisplay
-from ..infra.db.user_db import UserDBHandler
-
 from sqlalchemy.orm import Session
+
+from ..domains.user_model import UserCreate, UserDisplay, UserLogin, UserUpdate
+from ..infra.db.user_db import UserDBHandler
 
 
 class UserService:

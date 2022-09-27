@@ -1,12 +1,11 @@
 from asyncio.log import logger
 from typing import List
 
-from ..domains.tweet_model import Tweet, InputTweet
-from ..infra.db.tweet_db import TweetDBHandler
-
-
 from fastapi import UploadFile
 from sqlalchemy.orm import Session
+
+from ..domains.tweet_model import InputTweet, Tweet
+from ..infra.db.tweet_db import TweetDBHandler
 
 
 class TweetService:

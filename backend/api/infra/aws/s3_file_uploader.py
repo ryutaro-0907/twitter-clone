@@ -1,17 +1,14 @@
 # Refs
 # 1. https://towardsdatascience.com/how-to-upload-and-download-files-from-aws-s3-using-python-2022-4c9b787b15f2
-import os
 import logging
+import os
 import random
-
-from pydantic import BaseModel
 
 import boto3
 from botocore.client import Config
 from botocore.exceptions import ClientError
 from fastapi import UploadFile
-
-
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 boto3.set_stream_logger('boto3.resources', logging.INFO)
@@ -85,7 +82,7 @@ class AwsBucketApi(BaseModel):
 
 
 if __name__ == "__main__":
-    import requests    # To install: pip install requests
+    import requests  # To install: pip install requests
 
     # Generate a presigned S3 POST URL
     object_path= 'backend/api/infra/aws/test.txt'

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Fields(BaseModel):
     key: str
     AWSAccessKeyId:str

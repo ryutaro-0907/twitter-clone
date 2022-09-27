@@ -1,14 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form
-
+import logging
 from typing import List
+
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
-from ..domains.tweet_model import Tweet, InputTweet
+from ..domains.tweet_model import InputTweet, Tweet
 from ..infra.db.database import get_session
 from ..services.tweet_service import TweetService
-
-import logging
-
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

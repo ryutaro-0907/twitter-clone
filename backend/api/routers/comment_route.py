@@ -1,14 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException
-
+import logging
 from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..domains.comment_model import Comment, InputComment
 from ..infra.db.database import get_session
 from ..services.comment_service import CommentService
-
-import logging
-
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

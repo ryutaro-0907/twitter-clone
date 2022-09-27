@@ -6,9 +6,6 @@ from fastapi import APIRouter, HTTPException
 from ..domains.presigned_url_model import AwsPreSignedUrlResponse
 from ..infra.aws.s3_file_uploader import AwsBucketApi
 
-
-
-
 logger = logging.getLogger(__name__)
 router = APIRouter()
 

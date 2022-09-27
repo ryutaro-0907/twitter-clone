@@ -1,22 +1,19 @@
 """Init Dev DB."""
+import contextlib
 import logging
 import os
 import profile
 
-
-from sqlalchemy import create_engine
+from sqlalchemy import MetaData, create_engine
 from sqlalchemy.orm import sessionmaker
-import contextlib
-from sqlalchemy import MetaData
 
-from .domains.tweet_model import InputTweet
 from .domains.comment_model import InputComment
+from .domains.tweet_model import InputTweet
 from .domains.user_model import UserCreate
 from .infra.db.base import Base
-from .infra.db.user_db import UserDBHandler
-from .infra.db.tweet_db import TweetDBHandler
 from .infra.db.comment_db import CommentDBHandler
-
+from .infra.db.tweet_db import TweetDBHandler
+from .infra.db.user_db import UserDBHandler
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
