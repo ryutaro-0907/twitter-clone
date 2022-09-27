@@ -21,6 +21,7 @@ bcrypt = "^4.0.0"
 python-multipart = "^0.0.5"
 boto3 = "^1.24.72"
 isort = "^5.10.1"
+autopep8 = "^1.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
@@ -29,3 +30,10 @@ SQLAlchemy-Utils = "^0.38.3"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.autopep8]
+max_line_length = 120
+ignore = "E501,W6"  # or ["E501", "W6"]
+in-place = true
+recursive = true
+aggressive = 3

@@ -67,7 +67,7 @@ def test_user_login(mocker):
     assert content["username"] == user.username
     assert content["email"] == user.email
     assert (
-        Hash.verify_password(content["password"], user.password) == True
+        Hash.verify_password(content["password"], user.password)
     ), user.password
 
 

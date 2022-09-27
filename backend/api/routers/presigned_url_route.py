@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/aws-s3-pre-signed-url", response_model=AwsPreSignedUrlResponse)
-def gen_pre_signed_url(file_name:str):
+def gen_pre_signed_url(file_name: str):
     try:
         aws_api = AwsBucketApi()
 

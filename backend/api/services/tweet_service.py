@@ -13,7 +13,7 @@ class TweetService:
         self.session = session
         self.handler = TweetDBHandler(self.session)
 
-    def create_tweet(self, request: InputTweet, files: List[UploadFile]=None) -> Tweet or None:
+    def create_tweet(self, request: InputTweet, files: List[UploadFile] = None) -> Tweet or None:
         logger.info("creating new Tweet")
         res = self.handler.create_tweet(request, files)
         logger.info("created new Tweet")

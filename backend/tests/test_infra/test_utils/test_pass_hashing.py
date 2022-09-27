@@ -9,5 +9,5 @@ def test_hash():
     diff_pswd = Hash.verify_password(hashed_pswd, new_pswd)
     same_pswd = Hash.verify_password(hashed_pswd, pswd)
 
-    assert same_pswd == True
+    assert same_pswd
     assert diff_pswd == False

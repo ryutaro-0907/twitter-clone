@@ -16,8 +16,7 @@ client = TestClient(app)
 def test_user_create(mocker):
     username = "test user"
     user_id = 1
-    text='test text'
-
+    text = 'test text'
 
     tweet = InputTweet(
         user_id=user_id,
@@ -33,4 +32,3 @@ def test_user_create(mocker):
 
     assert content["username"] == tweet.username
     assert content["text"] == tweet.text
-

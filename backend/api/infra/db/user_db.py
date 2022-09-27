@@ -51,7 +51,7 @@ class UserDBHandler:
             )
 
             assert (
-                type(user.id) == int
+                isinstance(user.id, int)
             ), "type of user id must be int recived {}".format(user.id)
             user_disply = UserDisplay.from_orm(user)
 

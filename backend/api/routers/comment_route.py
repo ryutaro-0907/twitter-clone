@@ -17,7 +17,7 @@ def create_comment(request: InputComment, session: Session = Depends(get_session
     service = CommentService(session)
     try:
         res = service.create_comment(request)
-        if type(res) == Comment:
+        if isinstance(res, Comment):
             logger.info("Comment created successfully")
             return res
         else:

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class TweetDBHandler:
     session: Session
 
-    def create_tweet(self, input: InputTweet, files:list[UploadFile]=None) -> Tweet:
+    def create_tweet(self, input: InputTweet, files: list[UploadFile] = None) -> Tweet:
         try:
             logger.info(f'creating TweetOrm with: {input}')
 
@@ -45,12 +45,12 @@ class TweetDBHandler:
             #                 object_path = object_path,
             #             )
 
-                #         self.session.add(tweet_image)
-                #         # FIXME
-                #         # Research if it's better to commit at once in the end.
-                #         self.session.commit()
-                # except Exception as e:
-                #     raise Exception(f'Error while uploading files to s3 : {e}')
+            #         self.session.add(tweet_image)
+            #         # FIXME
+            #         # Research if it's better to commit at once in the end.
+            #         self.session.commit()
+            # except Exception as e:
+            #     raise Exception(f'Error while uploading files to s3 : {e}')
 
             self.session.add(tweet)
             self.session.commit()

@@ -17,9 +17,9 @@ router = APIRouter()
 #  session: Session = Depends(get_session)):
 @router.post("/tweets/create", response_model=Tweet)
 async def create_tweet(request: InputTweet = Form(...),
-                  files: List[UploadFile] = File(None),
-                  session: Session = Depends(get_session),
-                ) -> Tweet:
+                       files: List[UploadFile] = File(None),
+                       session: Session = Depends(get_session),
+                       ) -> Tweet:
 
     try:
         service = TweetService(session)
@@ -29,7 +29,7 @@ async def create_tweet(request: InputTweet = Form(...),
                 f'request recived {request} with attachments {files}'
             )
             res = service.create_tweet(request=request, files=files)
-            if type(res) == Tweet:
+            if isinstance(res, Tweet):
                 logger.info("Tweet created successfully")
                 return res
             else:

@@ -30,7 +30,6 @@ class TweetOrm(Base):
     images = relationship("TweetImageOrm", backref="tweets")
 
 
-
 class TweetImageOrm(Base):
     __tablename__ = "tweet_images"
 
