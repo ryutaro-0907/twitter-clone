@@ -1,23 +1,12 @@
-# dependencies
-/sanity/node_modules
-
-# vscode
-/.history
-
 # env
 *.envrc
 
-# python
-.venv
-__pycache__
-*.pyc
-*.pytest_cache
+# fresh
+/tmp
 
 # db
 *.db
-*/data
-*/data/postgres
-*/twitter-clone/backend/auth_service/data
+/data
 
 # Logs
 *.log
