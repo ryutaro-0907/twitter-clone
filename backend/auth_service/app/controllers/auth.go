@@ -81,7 +81,7 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "username or password is incorrect."})
 		return
 	} else {
-		log.Println(gin.H{"status":http.StatusOK, "message": "token successfully generated."})
+		log.Println(gin.H{"status": http.StatusOK, "message": "token successfully generated."})
 		c.JSON(http.StatusOK, gin.H{"token": token})
 	}
 }
