@@ -88,7 +88,7 @@ func (handler *AuthHandler) LoginCheck(username string, password string) (string
 		log.Println(err)
 		return "", err
 	}
-	
+
 	log.Println("user is valid")
 
 	return token, nil

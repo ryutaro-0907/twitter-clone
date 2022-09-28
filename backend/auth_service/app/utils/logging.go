@@ -4,7 +4,6 @@ import (
 	"io"
 	"log"
 	"os"
-
 )
 
 func LoggingSettings(logFile string) {
