@@ -1,4 +1,4 @@
-# Twitter Clone with Go, React.js.
+# Twitter Clone with Go and React.js.
 
 
 
