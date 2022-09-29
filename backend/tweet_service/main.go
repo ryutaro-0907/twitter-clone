@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"tweet_service/src/controllers"
 	"tweet_service/src/utils"
@@ -15,7 +17,10 @@ func main() {
 	// Initialize database (migrate Tweet model)
 	controllers.InitDB()
 
+	port := fmt.Sprint(":", os.Getenv("TWEET_SERVICE_PORT"), "")
+
 	// Start Server
-	controllers.StartWebServer()
+	server := controllers.SetuptWebServer()
+	server.Run(port)
 
 }

@@ -8,13 +8,9 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type TweetResponse struct {
+type CreateTweet struct {
 	Username string `json:"username" binding:"required"`
 	Body     string `json:"body" binding:"required"`
-}
-
-type CreateTweet struct {
-	TweetResponse
 }
 type Tweet struct {
 	gorm.Model
@@ -26,13 +22,6 @@ func NewTweet(input *CreateTweet) *Tweet {
 	return &Tweet{
 		Username: input.Username,
 		Body:     input.Body,
-	}
-}
-
-func NewResponse(username, body string) *TweetResponse {
-	return &TweetResponse{
-		Username: username,
-		Body:     body,
 	}
 }
 
@@ -60,21 +49,19 @@ func openDB() *gorm.DB {
 
 	db.LogMode(true)
 
-	// db.AutoMigrate(&Tweet{}) //Database migration
-
 	return db
 }
 
 func (h *TweetHandler) CreateTweet(input *CreateTweet) (body *gorm.DB, err error) {
 	log.Println("creating tweet with:", input)
 
-	// tweet := NewTweet(input)
+	tweet := NewTweet(input)
 
 	if err != nil {
 		log.Println(err)
 	}
 	db := openDB()
-	res := db.Create(&Tweet{Username: "hlhlhlll", Body: "jljlfjldsaf"})
+	res := db.Create(tweet)
 
 	// FIXME:
 	// want to use this insted
@@ -90,7 +77,6 @@ func (h *TweetHandler) CreateTweet(input *CreateTweet) (body *gorm.DB, err error
 func (h *TweetHandler) FetchAllTweets() ([]Tweet, error) {
 	log.Println("fetching all tweets")
 	var tweets []Tweet
-	log.Println("before fetching tweets", tweets)
 
 	db := openDB()
 	db.Find(&tweets)
@@ -100,7 +86,6 @@ func (h *TweetHandler) FetchAllTweets() ([]Tweet, error) {
 
 	// FIXME
 	// do error handling here
-	log.Println("after fetching tweets", tweets)
 	return tweets, nil
 
 }
