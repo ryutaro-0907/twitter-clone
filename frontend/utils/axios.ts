@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const client = axios.create({
-    baseURL:'http://nginx:8080/server/' ,
     // baseURL: process.env.BASE_URL,
     headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
     // transformRequest: [

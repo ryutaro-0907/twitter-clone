@@ -44,15 +44,36 @@ const Home = ({ tweets }: Props) => {
 
 export default Home;
 
-
+// FIXME
 export const getServerSideProps: GetServerSideProps = async () => {
   const tweets: Tweet[] = await fetchTweets() as Tweet[];
-  console.log(tweets)
+  if (tweets == null) {
+    const tweet: Tweet = {
+      // email: email,
+      username: '@ryutaro.furutani@gmail.com',
+      body: 'pages/index.tsx/getServerSideProps is not working. \
+      this is a mock message.\
+       Hit refresh button to load tweets from backend.\
+       You can also post tweet by first loggin in. ',
+      id: 1,
+      created_at: '2020/01/01',
+  }
   return {
     props: {
-      tweets: tweets
+      tweets: [tweet]
     }
   }
+}
+
+  console.log(tweets)
+  if (tweets.length > 0){
+    return {
+      props: {
+        tweets: tweets
+      }
+    }
+  }
+
 }
 
 // export const getServerSideProps: GetServerSideProps = async () => {
