@@ -37,9 +37,9 @@ func InitDB() {
 	log.Println("Database started successfully:")
 }
 
-func GetDB() *gorm.DB {
-	return Db
-}
+// func GetDB() *gorm.DB {
+// 	return Db
+// }
 
 func Close() {
 	if err := Db.Close(); err != nil {

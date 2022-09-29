@@ -36,7 +36,7 @@ func ApiCreateTweetHandler(c *gin.Context) {
 		return
 	}
 
-	handler := models.NewTweetHandler(models.GetDB())
+	handler := models.NewTweetHandler()
 
 	body, err := handler.CreateTweet(&input)
 
@@ -63,11 +63,7 @@ func ApiCreateTweetHandler(c *gin.Context) {
 // @Router /tweets [get]
 func ApiFetchAllTweetsHandler(c *gin.Context) {
 
-	// handler := models.TweetHandler{
-	// 	DB: models.GetDB(),
-	// }
-
-	handler := models.NewTweetHandler(models.GetDB())
+	handler := models.NewTweetHandler()
 
 	tweets, err := handler.FetchAllTweets()
 

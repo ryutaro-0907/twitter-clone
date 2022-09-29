@@ -16,9 +16,6 @@ type TweetResponse struct {
 type CreateTweet struct {
 	TweetResponse
 }
-
-var TweetsResponse []Tweet
-
 type Tweet struct {
 	gorm.Model
 	Username string `gorm:"size:255;not null" json:"username" binding:"required"`
@@ -40,15 +37,16 @@ func NewResponse(username, body string) *TweetResponse {
 }
 
 type TweetHandler struct {
-	db *gorm.DB
+	// db *gorm.DB
 }
 
-var Handler = &TweetHandler{}
-
-func NewTweetHandler(db *gorm.DB) *TweetHandler {
-	return &TweetHandler{db: db}
+func NewTweetHandler() *TweetHandler {
+	return &TweetHandler{}
 }
 
+// FIXME:
+// USE GetDB in base.go
+// This is only temporary as GetDB was throing error("can not keep up db connection")
 func openDB() *gorm.DB {
 	DbHost := os.Getenv("TWEET_DB_HOST")
 	DbUser := os.Getenv("TWEET_DB_USER")
