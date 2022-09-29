@@ -1,4 +1,4 @@
-# Twitter Clone with Python, Next.js and Nginx.
+# Twitter Clone with Go, React.js.
 
 
 
