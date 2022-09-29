@@ -19,6 +19,8 @@ func main() {
 	controllers.InitializeDb()
 
 	r := gin.Default()
+	r.Use(utils.CORSMiddleware())
+
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	v1 := r.Group("/api/v1")
 	{

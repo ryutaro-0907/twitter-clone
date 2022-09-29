@@ -22,75 +22,75 @@ function Tweet({ tweet } : Props) {
   const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false);
   const [input, setInput] = useState<string>('');
 
-//   const { data: session } = useSession();
-  const session = store.getState().user.is_login
+// //   const { data: session } = useSession();
+//   const session = store.getState().user.is_login
 
-  const fetchCommentsById = async (tweet_id: number) => {
-    try {
-      const data = await fetch(`http://localhost:8080/server/comments?tweet_id=${tweet_id}`)
-      const comments: Comment[] = await data.json()
-      console.log('tweets fetched succesfully;')
+//   const fetchCommentsById = async (tweet_id: number) => {
+//     try {
+//       const data = await fetch(`http://localhost:8080/server/comments?tweet_id=${tweet_id}`)
+//       const comments: Comment[] = await data.json()
+//       console.log('tweets fetched succesfully;')
 
-      return comments
-    } catch (err) {
-      throw new Error('error fetching commemt by tweet id: ' + err!)
-  }}
+//       return comments
+//     } catch (err) {
+//       throw new Error('error fetching commemt by tweet id: ' + err!)
+//   }}
 
-  const refreshComments = async () => {
-    const comments: Comment[] = await fetchCommentsById(tweet.id);
-    setComments(comments);
-  }
+//   const refreshComments = async () => {
+//     const comments: Comment[] = await fetchCommentsById(tweet.id);
+//     setComments(comments);
+//   }
 
-  useEffect(() => {
-      refreshComments();
-  }, []);
-
-
-  const postComment = async () => {
-    const commentInfo: CommentBody = {
-        comment: input,
-        username: 'test user',
-        profile_image: 'https://links.papareact.com/gll',
-        user_id: 1,
-        tweet_id: tweet.id,
-        // username: session?.user?.name || 'Unknown user',
-        // profileImage: session?.user?.image || 'https://links.papareact.com/gll',
-        // tweetId: tweet._id,
-    }
-
-    const result = await fetch(`http://localhost:8080/server/comments`, {
-        body: JSON.stringify(commentInfo),
-        headers: {
-            'Content-type': 'application/json',
-          },
-        method: 'POST',
-    })
-
-    console.log('fetching comment esult', result)
-
-    const json = await result.json();
-
-    const newComments = await fetchCommentsById(tweet.id);
-    setComments(newComments);
-
-    toast('Comment posted successfully', {
-        icon: '🚀'
-    })
-
-    return json
-}
+//   useEffect(() => {
+//       refreshComments();
+//   }, []);
 
 
-  const handleSubmitForComment = (e: React.FormEvent<HTMLElement>) => {
-      e.preventDefault();
+//   const postComment = async () => {
+//     const commentInfo: CommentBody = {
+//         comment: input,
+//         username: 'test user',
+//         profile_image: 'https://links.papareact.com/gll',
+//         user_id: 1,
+//         tweet_id: tweet.id,
+//         // username: session?.user?.name || 'Unknown user',
+//         // profileImage: session?.user?.image || 'https://links.papareact.com/gll',
+//         // tweetId: tweet._id,
+//     }
 
-      postComment();
+//     const result = await fetch(`http://localhost:8080/server/comments`, {
+//         body: JSON.stringify(commentInfo),
+//         headers: {
+//             'Content-type': 'application/json',
+//           },
+//         method: 'POST',
+//     })
 
-      setInput('');
-      setComments([]);
-      setCommentBoxVisible(false);
+//     console.log('fetching comment esult', result)
 
-  }
+//     const json = await result.json();
+
+//     const newComments = await fetchCommentsById(tweet.id);
+//     setComments(newComments);
+
+//     toast('Comment posted successfully', {
+//         icon: '🚀'
+//     })
+
+//     return json
+// }
+
+
+//   const handleSubmitForComment = (e: React.FormEvent<HTMLElement>) => {
+//       e.preventDefault();
+
+//       postComment();
+
+//       setInput('');
+//       setComments([]);
+//       setCommentBoxVisible(false);
+
+//   }
 
   return (
     <div className="flex flex-col space-x-3 border-y
@@ -114,7 +114,7 @@ function Tweet({ tweet } : Props) {
                         date={tweet.created_at}
                      />
                 </div>
-                <p className='pt-1'>{tweet.text}</p>
+                <p className='pt-1'>{tweet.body}</p>
 
                 {
                     tweet.images && (
@@ -129,11 +129,11 @@ function Tweet({ tweet } : Props) {
         </div>
         <div  className='mt-5 flex justify-between'>
             <div
-                onClick={() => session && setCommentBoxVisible(!commentBoxVisible)}
+                // onClick={() => session && setCommentBoxVisible(!commentBoxVisible)}
                 className='flex cursor-pointer items-center space-x-3 text-gray-400'>
                 <ChatAlt2Icon
                     className="h-5 w-5" />
-                <p> {comments.length} </p>
+                {/* <p> {comments.length} </p> */}
             </div>
             <div className='flex cursor-pointer items-center space-x-3 text-gray-400'>
                 <SwitchHorizontalIcon className="h-5 w-5" />

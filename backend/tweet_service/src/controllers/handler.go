@@ -61,12 +61,12 @@ func ApiFetchAllTweetsHandler(c *gin.Context) {
 	handler := models.NewTweetHandler()
 
 	tweets, err := handler.FetchAllTweets()
-	
+
 	if err != nil {
 		log.Println("error fetching tweet: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "could not fetch tweets."})
 		return
 	} else {
-		c.JSON(http.StatusOK, gin.H{"tweets": tweets})
+		c.JSON(http.StatusOK, tweets)
 	}
 }

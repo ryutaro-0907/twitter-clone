@@ -6,11 +6,11 @@ import { userSlice } from '../redux/userSlice';
 import { store } from '../redux/store';
 interface UserCreate {
     username: string;
-    email: string;
+    // email: string;
     password: string;
 }
 function signup() {
-    const [email, setEmail] = useState('')
+    // const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
 
@@ -30,11 +30,11 @@ function signup() {
 
         const userCreate: UserCreate = {
             username: username,
-            email: email,
+            // email: email,
             password: password,
         }
 
-        const res  = fetch('http://localhost:8080/server/users', {
+        const res  = fetch('http://localhost:8081/api/v1/auth/register', {
             body: JSON.stringify(userCreate),
             method: 'POST',
             headers: {
@@ -42,9 +42,9 @@ function signup() {
               },
         }).then(response => {
             dispatch(login())
-            dispatch(setStateEmail(email))
+            // dispatch(setStateEmail(email))
             dispatch(setStateUsername(username))
-            router.push('/')
+            router.push('/login')
 
         }).catch(() => alert('Email is already taken, please login'))
     }
@@ -65,14 +65,14 @@ function signup() {
                         name="username"
                         placeholder="Username"
                          />
-                    <input
+                    {/* <input
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded mb-4"
                         name="email"
                         placeholder="Email Address"
-                         />
+                         /> */}
                     <input
                         value={password}
                         onChange={e => setPassword(e.target.value)}
@@ -84,7 +84,8 @@ function signup() {
                     <button
                         type="submit"
                         onClick={createUserAndReturnSessionIfSuccess}
-                        disabled={!username || !email || !password}
+                        // disabled={!username || !email || !password}
+                        disabled={!username || !password}
                         className="w-full text-center py-3 rounded
                          bg-blue-500 text-white
                          hober:bg-blue-200 focus:outline-none my-1">

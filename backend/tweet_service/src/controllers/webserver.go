@@ -2,6 +2,7 @@ package controllers
 
 import (
 	docs "tweet_service/docs"
+	"tweet_service/src/utils"
 
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
@@ -10,7 +11,10 @@ import (
 
 func SetuptWebServer() *gin.Engine {
 	server := gin.Default()
+	// server.Use(utils.CORSMiddleware())
+
 	server.GET("/", func(c *gin.Context) { c.String(200, "Welcome to Tweet Service API!!") })
+	server.Use(utils.CORSMiddleware())
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
 

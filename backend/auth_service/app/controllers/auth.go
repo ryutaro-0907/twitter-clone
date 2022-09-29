@@ -82,7 +82,7 @@ func Login(c *gin.Context) {
 		return
 	} else {
 		log.Println(gin.H{"status": http.StatusOK, "message": "token successfully generated."})
-		c.JSON(http.StatusOK, gin.H{"token": token})
+		c.JSON(http.StatusOK, gin.H{"token": token, "username": u.Username})
 	}
 }
 
