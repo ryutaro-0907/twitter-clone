@@ -1,0 +1,51 @@
+definitions:
+  models.CreateTweet:
+    properties:
+      body:
+        type: string
+      username:
+        type: string
+    required:
+    - body
+    - username
+    type: object
+info:
+  contact: {}
+paths:
+  /tweets:
+    get:
+      consumes:
+      - application/json
+      description: Fetch Tweets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Fetch Tweets Endpoint
+      tags:
+      - tweet
+    post:
+      consumes:
+      - application/json
+      description: Create Tweet
+      parameters:
+      - description: Create Tweett
+        in: body
+        name: models.CreateTweet
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateTweet'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create Tweet Endpoint
+      tags:
+      - tweet
+swagger: "2.0"

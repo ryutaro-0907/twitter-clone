@@ -97,17 +97,17 @@ func (handler *AuthHandler) LoginCheck(username string, password string) (string
 
 func (handler *AuthHandler) SaveUser(input *RegisterInput) (*User, error) {
 
-	log.Println("saving user...")
-
-	var err error
 	log.Println("saving user to database")
 
-	res := handler.Db.Create(&input)
+	handler.Db.Create(&input)
+	// FIXME
+	// WANT TO DO
+	// err := handler.Db.Create(&input).Error
+	// err != nil {...}
 
-	if res.Error != nil {
-		log.Println(err)
-		return &User{}, err
-	}
+	// BUT handler.Db.Create(&input).Error & handler.Db.Create(&input).Error()
+	// do not return error unlike we see in official documentation.
+
 	user := User{
 		Username: input.Username,
 		Password: input.Password,

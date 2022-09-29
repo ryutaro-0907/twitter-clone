@@ -17,7 +17,6 @@ func main() {
 	log.Println("starting auth service...")
 
 	controllers.InitializeDb()
-	// controllers.CloseDb()
 
 	r := gin.Default()
 	docs.SwaggerInfo.BasePath = "/api/v1"
