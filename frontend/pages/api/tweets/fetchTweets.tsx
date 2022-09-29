@@ -9,6 +9,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     console.log("fetching tweet")
+    // FIXME: Use this endpoint inseted to access backend
+    // ERR_BLOCKED_BY_CLIENT Error
+    // Returens null
     const tweets = await fetchTweets()
 
     res.status(200).json({ tweets });
