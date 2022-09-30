@@ -24,6 +24,8 @@
 <img width="1440" alt="Screen Shot 2022-09-30 at 8 35 07 AM" src="https://user-images.githubusercontent.com/85374614/193160096-f8c5963e-669e-4729-8f07-45e1a47977ed.png">
 
 
+# [![Test status](https://github.com/ryutaro-0907/twitter-clone/workflows/test/badge.svg)](https://github.com/ryutaro-0907/twitter-clone/actions)
+
 # Tecnologies
 
 - Gin
