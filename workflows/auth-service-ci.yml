@@ -1,13 +1,14 @@
 name: go-ci
 
-push:
+on:
+  push:
+      branches:
+        - main
+        - go-microservice
+  pull_request:
     branches:
-      - main
-      - go-microservice
-pull:
-   branches:
-      - main
-      - go-microservice
+        - main
+        - go-microservice
 
 jobs:
 
