@@ -1,6 +1,13 @@
 name: go-ci
 
-on: [push]
+push:
+    branches:
+      - main
+      - go-microservice
+pull:
+   branches:
+      - main
+      - go-microservice
 
 jobs:
 
