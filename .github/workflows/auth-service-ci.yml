@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: build
-        working-directory: /backend/auth_service
+        working-directory: ./backend/auth_service
         run: go build ./...
 
   test:
@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test
-        working-directory: /backend/auth_service
+        working-directory: ./backend/auth_service
         run: go test ./... -v
 
 
