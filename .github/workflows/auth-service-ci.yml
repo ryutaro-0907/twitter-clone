@@ -41,10 +41,10 @@ jobs:
         working-directory: ./backend/auth_service
         run: |
           go test ./... -v
-          go go fmt ./...
+          go fmt ./...
 
 
-  # FIXME: This is not working?
+  # FIXME: This is not working.
   # golangci-lint:
   #   name: lint
   #   runs-on: ubuntu-latest
