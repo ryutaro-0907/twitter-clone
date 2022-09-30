@@ -33,12 +33,16 @@ type AuthHandler struct {
 	Db *gorm.DB
 }
 
+func NewAuthHandler(db *gorm.DB) *AuthHandler {
+	return &AuthHandler{Db: db}
+}
+
 func (handler *AuthHandler) GetUserByID(uid uint) (User, error) {
 	var u User
 
 	if err := handler.Db.First(&u, uid).Error; err != nil {
 		log.Println(err)
-		err := errors.New("User not found!")
+		err := errors.New("User not found.")
 		return u, err
 	}
 
@@ -99,7 +103,12 @@ func (handler *AuthHandler) SaveUser(input *RegisterInput) (*User, error) {
 
 	log.Println("saving user to database")
 
-	handler.Db.Create(&input)
+	user := &User{
+		Username: input.Username,
+		Password: input.Password,
+	}
+
+	handler.Db.Create(&user)
 	// FIXME
 	// WANT TO DO
 	// err := handler.Db.Create(&input).Error
@@ -108,12 +117,8 @@ func (handler *AuthHandler) SaveUser(input *RegisterInput) (*User, error) {
 	// BUT handler.Db.Create(&input).Error & handler.Db.Create(&input).Error()
 	// do not return error unlike we see in official documentation.
 
-	user := User{
-		Username: input.Username,
-		Password: input.Password,
-	}
 	log.Println("user saved.")
-	return &user, nil
+	return user, nil
 }
 
 func (u *User) BeforeSave() error {
