@@ -32,31 +32,32 @@ jobs:
         run: go build ./...
 
   test:
-    name: test
+    name: test and format code
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: test
         working-directory: ./backend/auth_service
-        run: go test ./... -v
+        run: |
+          go test ./... -v
+          go go fmt ./...
+
 
   # FIXME: This is not working?
-  golangci-lint:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-go@v3
-        with:
-          go-version: 1.17
-      - uses: actions/checkout@v3
-      - name: golangci-lint
-
-        run: cd backend/auth_service
-        uses: golangci/golangci-lint-action@v3
-        with:
-          # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
-          version: v1.29
+  # golangci-lint:
+  #   name: lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/setup-go@v3
+  #       with:
+  #         go-version: 1.17
+  #     - uses: actions/checkout@v3
+  #     - name: golangci-lint
+  #       uses: golangci/golangci-lint-action@v3
+  #       with:
+  #         # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
+  #         version: v1.29
 
   # vulns:
   #   name: Vulnerability scanner
