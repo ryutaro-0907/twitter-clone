@@ -65,9 +65,7 @@ func (h *TweetHandler) CreateTweet(input *CreateTweet) (body *gorm.DB, err error
 
 	// FIXME:
 	// want to use this insted
-	// res := h.db.Create(&Tweet{Username: "hlhlhlll", Body: "jljlfjldsaf"})
-
-	// res := h.db.Create(&Tweet{Username: "test", Body: "test"})
+	// res := h.db.Create(&Tweet{Username: "Mike Ross", Body: "Hello world!"})
 
 	log.Println("Tweet created successfully")
 	return res, nil

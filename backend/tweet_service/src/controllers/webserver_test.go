@@ -8,7 +8,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"tweet_service/src/controllers"
 	"tweet_service/src/models"
 	// "github.com/gin-gonic/gin"
 )
@@ -16,7 +15,7 @@ import (
 // NOTE make sure to start up server before testing this.
 // TODO Enable to use test db? or do it separately.
 func TestFetchAllTweets(t *testing.T) {
-	server := controllers.SetuptWebServer()
+	server := SetuptWebServer()
 
 	w := httptest.NewRecorder()
 	// TODO: Change url with env variable?
@@ -27,7 +26,7 @@ func TestFetchAllTweets(t *testing.T) {
 }
 
 func TestCreateTweet(t *testing.T) {
-	server := controllers.SetuptWebServer()
+	server := SetuptWebServer()
 	tweet := models.CreateTweet{
 		Username: "user",
 		Body:     "text",
@@ -42,7 +41,6 @@ func TestCreateTweet(t *testing.T) {
 
 	// FIXME
 	// change url
-
 	req, _ := http.NewRequest("POST", "http://localhost:8082/api/v1/tweets", &buf)
 	server.ServeHTTP(w, req)
 
