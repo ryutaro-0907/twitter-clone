@@ -1,4 +1,4 @@
-# Twitter Clone with Python, Next.js and Nginx.
+# Twitter Clone with Go and React.js.
 
 
 
@@ -13,16 +13,25 @@
 
 <img width="1440" alt="Screen Shot 2022-09-05 at 1 30 56 PM" src="https://user-images.githubusercontent.com/85374614/188360816-a7e8e778-baad-4973-8b4e-0fb5b21c317e.png">
 
+## Authentification Service Swagger
+
+
+<img width="1440" alt="Screen Shot 2022-09-30 at 8 35 51 AM" src="https://user-images.githubusercontent.com/85374614/193160158-d8ed80c3-05d1-4e7e-ab7f-ddcafcbad3be.png">
+
+## Tweet Service Swagger
+
+
+<img width="1440" alt="Screen Shot 2022-09-30 at 8 35 07 AM" src="https://user-images.githubusercontent.com/85374614/193160096-f8c5963e-669e-4729-8f07-45e1a47977ed.png">
+
 
 # Tecnologies
 
-- FastApi
+- Gin
 - Next.js
 - Typescript
 - Tailwind.css
 - Postgres
 - Docker
-- Nginx
 
 
 # Getting Started
@@ -32,28 +41,35 @@
 
 
 ```.envrc
-# For google auth api
-export GOOGLE_CLIENT_ID=
-export GOOGLE_CLIENT_SECRET=
+# Auth Service
+export AUTH_DB_HOST=192.168.0.2
+export AUTH_DB_DRIVER=postgres
+export AUTH_DB_USER=root
+export AUTH_DB_PASSWORD=root
+export AUTH_DB_NAME=auth_service_db
+export AUTH_DB_PORT=5432
+export AUTH_DB_ENDPOINT=192.168.0.25:${AUTH_DB_PORT}
 
-# For backend log 
-export LOGFILE_PATH=${LOCAL_DATA_DIR}/logs/app.log
-export LOCAL_DATA_DIR=./data
+export AUTH_LOCAL_DATA_DIR=./backend/auth_service/data
+export AUTH_LOGFILE_PATH=${AUTH_LOCAL_DATA_DIR}/logs/app.log
 
-# DB
-export DB_TYPE=postgres
-export DB_USER=user  # to access the postgres database from backend
-export DB_PASS=pass  # to access the postgres database from backend
-export DB_ENDPOINT=192.168.0.25:5432 # to access the postgres database from backend
+export AUTH_API_SECRET=ssss
+export AUTH_TOKEN_HOUR_LIFESPAN=1
 
-# for frontend to call backend api
-export BASE_URL=http://nginx:8080/api 
 
-# aws s3
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
-export AWS_S3_BUCKET_NAME=pythons3tutorialbucket2022
-export AWS_REGION_NAME=us-east-1
+# Tweet Service
+export TWEET_SERVICE_PORT=8082
+
+export TWEET_DB_HOST=192.168.0.25
+export TWEET_DB_DRIVER=postgres
+export TWEET_DB_USER=root
+export TWEET_DB_PASSWORD=root
+export TWEET_DB_NAME=tweet_service_db
+export TWEET_DB_PORT=5433
+export TWEET_DB_ENDPOINT=192.168.0.25:${TWEET_DB_PORT}
+
+export TWEET_LOCAL_DATA_DIR=./backend/tweet_service/data
+export TWEET_LOGFILE_PATH=${TWEET_LOCAL_DATA_DIR}/logs/app.log
 
 ```
 
@@ -121,28 +137,4 @@ If backend not conncting to database, please wait and reload backend.
 ### Environment variables Trabule Shooting
 
 
-# Important tips For Development
 
-
-## Backend test 
-
-
-```bash
-docker exec -it backend sh -c "poetry run pytest"
-```
-
-
-## Code Formatting For Backend (PEP8)
-
-
-```bash
-poetry run autopep8 .
-```
-
-
-## Sort Imports For Backend
-
-
-```bash
-isort --atomic .
-```

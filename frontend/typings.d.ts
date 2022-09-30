@@ -1,17 +1,16 @@
 export interface Tweet extends TweetBody {
     id: number
     created_at: str
-    user_id: number
+    username: str
     updated_at?: str
     deleted_at?: str
     blocked?: bool
 }
 
 export type TweetBody = {
-    user_id: number
-    text: str
+    body: str
     username?: str
-    profile_image: str
+    profile_image?: str
     images?: str
 }
 
