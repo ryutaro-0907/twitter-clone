@@ -9,7 +9,7 @@ jobs:
       - name: set up
         uses: actions/setup-go@v2
         with:
-          go-version: ^1.13
+          go-version: ^1.17
         id: go
       - name: check out
         uses: actions/checkout@v2
@@ -45,8 +45,21 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
+        uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.29
+          version: latest
+
+  vulns:
+    name: Vulnerability scanner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.17
+      - name: WriteGoList
+        run: go list -json -m all > go.list
+      - name: Nancy
+        uses: sonatype-nexus-community/nancy-github-action@main
