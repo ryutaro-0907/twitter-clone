@@ -44,7 +44,6 @@ function login() {
             dispatch(login())
             // dispatch(setStateEmail(email))
             dispatch(setStateUsername(username))
-            dispatch(setStateUsername('afdsfsaf'))
 
             router.push('/')
 
