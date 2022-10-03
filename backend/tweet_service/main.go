@@ -14,9 +14,6 @@ func main() {
 	utils.LoggingSettings("tweet_service.log")
 	log.Println("starting tweet service...")
 
-	// Initialize database (migrate Tweet model)
-	controllers.InitDB()
-
 	port := fmt.Sprint(":", os.Getenv("TWEET_SERVICE_PORT"), "")
 
 	// Start Server

@@ -9,6 +9,11 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
+var (
+	Db  *gorm.DB
+	err error
+)
+
 func init() {
 	db, err := OpenDB()
 	if err != nil {
@@ -16,23 +21,23 @@ func init() {
 	}
 	db.LogMode(true)
 
-	db.AutoMigrate(&User{}) //Database migration
+	db.AutoMigrate(&Tweet{}) //Database migration
 	db.Close()
 	log.Println("Database initialzied successfully:")
+
 }
 
 func OpenDB() (*gorm.DB, error) {
-
 	var (
 		db  *gorm.DB
 		err error
 	)
 
-	DbHost := os.Getenv("AUTH_DB_HOST")
-	DbUser := os.Getenv("AUTH_DB_USER")
-	DbPassword := os.Getenv("AUTH_DB_PASSWORD")
-	DbName := os.Getenv("AUTH_DB_NAME")
-	DbPort := os.Getenv("AUTH_DB_PORT")
+	DbHost := os.Getenv("TWEET_DB_HOST")
+	DbUser := os.Getenv("TWEET_DB_USER")
+	DbPassword := os.Getenv("TWEET_DB_PASSWORD")
+	DbName := os.Getenv("TWEET_DB_NAME")
+	DbPort := os.Getenv("TWEET_DB_PORT")
 
 	dsn := fmt.Sprint("host=", DbHost, " user=", DbUser, " password=", DbPassword, " dbname=", DbName, " port=", DbPort, " sslmode=disable TimeZone=Asia/Tokyo")
 
@@ -42,5 +47,7 @@ func OpenDB() (*gorm.DB, error) {
 		log.Println(err)
 		return db, err
 	}
+
 	return db, nil
+
 }

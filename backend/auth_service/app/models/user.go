@@ -60,30 +60,31 @@ func VerifyPassword(password, hashedPassword string) error {
 	log.Println("verifying password...")
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
-		log.Println("verifying password failed", err)
+		return err
 	}
+
+	log.Println("password verified successfully.")
 	return err
+
+
 }
 
-func (handler *AuthHandler) LoginCheck(username string, password string) (string, error) {
-	var err error
+func (handler *AuthHandler) LoginCheck(input *LoginInput) (string, error) {
+	var (
+		err error
+		u   User
+	)
 
-	u := User{}
 	log.Println("logging in...")
 
-	user := handler.Db.Where("name = ?", username).First(&u)
-	log.Println("user found in db")
-
-	if user == nil {
-		log.Println("could not find user", err)
-		return "", err
+	if result := handler.Db.Where("username = ?", input.Username).First(&u); result.Error != nil {
+		return "", errors.New("user not found please register")
 	}
 
-	err = VerifyPassword(password, u.Password)
+	err = VerifyPassword(input.Password, u.Password)
 
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
-		log.Println(err)
-		return "", err
+		return "incorrect password.", err
 	}
 
 	token, err := utils.GenerateToken(u.ID)
@@ -93,7 +94,7 @@ func (handler *AuthHandler) LoginCheck(username string, password string) (string
 		return "", err
 	}
 
-	log.Println("user is valid")
+	log.Println("user is valid, returning token")
 
 	return token, nil
 
@@ -101,40 +102,42 @@ func (handler *AuthHandler) LoginCheck(username string, password string) (string
 
 func (handler *AuthHandler) SaveUser(input *RegisterInput) (*User, error) {
 
-	log.Println("saving user to database")
+	log.Println("saving user to database with username=", input.Username)
 
-	user := &User{
+	var uExist User
+
+	if result := handler.Db.Where("username = ?", input.Username).First(&uExist); result.Error == nil {
+		return &uExist, errors.New("username already taken")
+	}
+
+	u := &User{
 		Username: input.Username,
 		Password: input.Password,
 	}
 
-	handler.Db.Create(&user)
-	// FIXME
-	// WANT TO DO
-	// err := handler.Db.Create(&input).Error
-	// err != nil {...}
+	log.Println("creating user with username=", u.Username)
 
-	// BUT handler.Db.Create(&input).Error & handler.Db.Create(&input).Error()
-	// do not return error unlike we see in official documentation.
+	if result := handler.Db.Create(&u); result.Error != nil {
+		return u, result.Error
+	}
 
-	log.Println("user saved.")
-	return user, nil
+	log.Println("user created.")
+	return u, nil
 }
 
 func (u *User) BeforeSave() error {
-	log.Println("BeforeSave")
+	log.Println("hashing password...")
 	//turn password into hash
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
-	log.Println("Hashed Password")
+	log.Println("hashed Password.")
 	u.Password = string(hashedPassword)
 
 	//remove spaces in username
 	u.Username = html.EscapeString(strings.TrimSpace(u.Username))
-	log.Println("Values in User model cleaned.")
+	log.Println("space in Username removed.")
 
 	return nil
 

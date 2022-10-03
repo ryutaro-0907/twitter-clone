@@ -47,13 +47,13 @@ services:
       build:
         context: ./backend/auth_service/postgres
         dockerfile: Dockerfile
-      restart: on-failure
+      restart: always
       environment:
         POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
         POSTGRES_USER: ${AUTH_DB_USER}
         POSTGRES_DB: ${AUTH_DB_NAME}
       ports:
-        - 5432:5432
+        - ${AUTH_DB_PORT}:${AUTH_DB_PORT}
 
       volumes:
       - '${AUTH_LOCAL_DATA_DIR}/postgresql:/var/lib/postgresql/data'
@@ -66,13 +66,14 @@ services:
       context: ./backend/auth_service
     restart: on-failure
     ports:
-      - 8081:8081
+      - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
     tty: true
     depends_on:
       - auth_service_postgres
     links:
       - auth_service_postgres
     environment:
+      # To connect to auth_service_postgres
       - AUTH_DB_HOST=${AUTH_DB_HOST}
       - AUTH_DB_DRIVER=${AUTH_DB_DRIVER}
       - AUTH_DB_PASS=${DB_PASS}
@@ -80,6 +81,8 @@ services:
       - AUTH_DB_PASSWORD=${AUTH_DB_PASSWORD}
       - AUTH_DB_NAME=${AUTH_DB_NAME}
       - AUTH_DB_PORT=${AUTH_DB_PORT}
+      # For API
+      - AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
       - AUTH_API_SECRET=${AUTH_API_SECRET}
       - AUTH_TOKEN_HOUR_LIFESPAN=${AUTH_TOKEN_HOUR_LIFESPAN}
 

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"tweet_service/src/models"
@@ -19,29 +18,31 @@ import (
 // @Accept json
 // @Produce json
 // @Param models.CreateTweet body models.CreateTweet true "Create Tweett"
-// @Success 200 {string} body
+// @Success 200 {string} tweets
 // @Router /tweets [post]
 func ApiCreateTweetHandler(c *gin.Context) {
 
 	var input models.CreateTweet
 
 	if err := c.ShouldBindJSON(&input); err != nil {
-		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	handler := models.NewTweetHandler()
+	db, err := models.OpenDB()
+	if err != nil {
+		return
+	}
 
-	body, err := handler.CreateTweet(&input)
+	handler := models.NewTweetHandler(db)
+
+	tweets, err := handler.CreateTweet(&input)
 
 	if err != nil {
-		log.Println("error crateing tweet: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "could not create tweet."})
 		return
 	} else {
-		log.Println(gin.H{"status": http.StatusOK, "message": "tweet successfully created."})
-		c.JSON(http.StatusOK, gin.H{"body": body})
+		c.JSON(http.StatusOK, gin.H{"body": tweets})
 	}
 }
 
@@ -58,12 +59,16 @@ func ApiCreateTweetHandler(c *gin.Context) {
 // @Router /tweets [get]
 func ApiFetchAllTweetsHandler(c *gin.Context) {
 
-	handler := models.NewTweetHandler()
+	db, err := models.OpenDB()
+	if err != nil {
+		return
+	}
+
+	handler := models.NewTweetHandler(db)
 
 	tweets, err := handler.FetchAllTweets()
 
 	if err != nil {
-		log.Println("error fetching tweet: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "could not fetch tweets."})
 		return
 	} else {

@@ -1,9 +1,7 @@
 package models
 
 import (
-	"fmt"
 	"log"
-	"os"
 
 	"github.com/jinzhu/gorm"
 )
@@ -26,49 +24,26 @@ func NewTweet(input *CreateTweet) *Tweet {
 }
 
 type TweetHandler struct {
-	// db *gorm.DB
+	db *gorm.DB
 }
 
-func NewTweetHandler() *TweetHandler {
-	return &TweetHandler{}
+func NewTweetHandler(db *gorm.DB) *TweetHandler {
+	return &TweetHandler{db: db}
 }
 
-// FIXME:
-// USE GetDB in base.go
-// This is only temporary as GetDB was throing error("can not keep up db connection")
-func openDB() *gorm.DB {
-	DbHost := os.Getenv("TWEET_DB_HOST")
-	DbUser := os.Getenv("TWEET_DB_USER")
-	DbPassword := os.Getenv("TWEET_DB_PASSWORD")
-	DbName := os.Getenv("TWEET_DB_NAME")
-	DbPort := os.Getenv("TWEET_DB_PORT")
-
-	dsn := fmt.Sprint("host=", DbHost, " user=", DbUser, " password=", DbPassword, " dbname=", DbName, " port=", DbPort, " sslmode=disable")
-
-	db, _ := gorm.Open("postgres", dsn)
-
-	db.LogMode(true)
-
-	return db
-}
-
-func (h *TweetHandler) CreateTweet(input *CreateTweet) (body *gorm.DB, err error) {
+func (h *TweetHandler) CreateTweet(input *CreateTweet) (*Tweet, error) {
 	log.Println("creating tweet with:", input)
-
-	tweet := NewTweet(input)
-
-	if err != nil {
-		log.Println(err)
+	t := &Tweet{
+		Username: input.Username,
+		Body:     input.Body,
 	}
-	db := openDB()
-	res := db.Create(tweet)
 
-	// FIXME:
-	// want to use this insted
-	// res := h.db.Create(&Tweet{Username: "Mike Ross", Body: "Hello world!"})
+	if res := h.db.Create(&t); res.Error != nil {
+		return t, res.Error
+	}
 
 	log.Println("Tweet created successfully")
-	return res, nil
+	return t, nil
 
 }
 
@@ -76,14 +51,10 @@ func (h *TweetHandler) FetchAllTweets() ([]Tweet, error) {
 	log.Println("fetching all tweets")
 	var tweets []Tweet
 
-	db := openDB()
-	db.Find(&tweets)
-	// FIXME:
-	// want to use this insted
-	// h.db.Find(&tweets)
+	if res := h.db.Find(&tweets); res.Error != nil {
+		return tweets, res.Error
+	}
 
-	// FIXME
-	// do error handling here
 	return tweets, nil
 
 }
