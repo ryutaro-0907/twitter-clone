@@ -6,13 +6,15 @@ import { userSlice } from '../redux/userSlice';
 import { store } from '../redux/store';
 
 interface UserLogin {
-    email: string;
+    // email: string;
+    username: string
     password: string;
 }
 
 function login() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    // const [email, setEmail] = useState<string>('')
+    const [username, setUsername] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
 
     const router = useRouter()
 
@@ -23,11 +25,12 @@ function login() {
         e.preventDefault();
 
         const userLogin: UserLogin = {
-            email: email,
+            // email: email,
+            username: username,
             password: password,
         }
 
-        const res  = fetch('http://localhost:8080/server/users/login', {
+        const res  = fetch('http://localhost:8081/api/v1/auth/login', {
             body: JSON.stringify(userLogin),
             method: 'POST',
             headers: {
@@ -36,14 +39,18 @@ function login() {
 
         }).then(response => {
             const data = response.json()
+            console.log(data)
 
             dispatch(login())
-            dispatch(setStateEmail(email))
-            dispatch(setStateUsername('afdsfsaf'))
+            // dispatch(setStateEmail(email))
+            dispatch(setStateUsername(username))
 
             router.push('/')
 
-        }).catch(() => alert('Email is already taken, please login'))
+        }).catch(res => {
+            console.log('Failed to login', res)
+            alert('Email is Password is incorrect please try again.' )
+        })
     }
 
     return (
@@ -55,12 +62,12 @@ function login() {
                   <h1 className="mb-8 text3xl text-center">Log in</h1>
                   <form className="">
                       <input
-                          value={email}
-                          onChange={e => setEmail(e.target.value)}
+                          value={username}
+                          onChange={e => setUsername(e.target.value)}
                           type="text"
                           className="block border border-grey-light w-full p-3 rounded mb-4"
-                          name="email"
-                          placeholder="Email Address"
+                          name="username"
+                          placeholder="Username"
                            />
                       <input
                           value={password}
@@ -72,7 +79,7 @@ function login() {
                            />
                       <button
                           type="submit"
-                          disabled={!email || !password}
+                          disabled={!username || !password}
                           onClick={userLogin}
                           className="w-full text-center py-3 rounded
                            bg-blue-500 text-white

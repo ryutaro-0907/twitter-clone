@@ -1,0 +1,73 @@
+name: go-ci
+
+on: [push]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set up
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.17
+        id: go
+      - name: check out
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v2.1.0
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build
+        working-directory: ./backend/auth_service
+        run: go build ./...
+
+  test:
+    name: test and format code
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: test
+        working-directory: ./backend/auth_service
+        run: |
+          go test ./... -v
+          go fmt ./...
+
+
+  # FIXME: This is not working.
+  # golangci-lint:
+  #   name: lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/setup-go@v3
+  #       with:
+  #         go-version: 1.17
+  #     - uses: actions/checkout@v3
+  #     - name: golangci-lint
+  #       uses: golangci/golangci-lint-action@v3
+  #       with:
+  #         # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
+  #         version: v1.29
+
+  # vulns:
+  #   name: Vulnerability scanner
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-go@v2
+  #       with:
+  #         go-version: ^1.17
+  #     - name: WriteGoList
+  #       run: go list -json -m all > go.list
+  #     - name: Nancy
+  #       uses: sonatype-nexus-community/nancy-github-action@main

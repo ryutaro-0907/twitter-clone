@@ -17,7 +17,7 @@ function Feed( { tweets: tweetsProp }: Props )  {
   const handleRefresh = async () => {
     const refreshToast = toast.loading("Refreshing Tweets...");
 
-    const data = await fetch('http://localhost:8000/server/tweets')
+    const data = await fetch('http://localhost:8082/api/v1/tweets')
     const tweets: Tweet[] = await data.json()
 
     console.log('tweets fetched succesfully;')
